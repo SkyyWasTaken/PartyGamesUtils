@@ -1,6 +1,7 @@
 package us.skyywastaken.partygamesutils.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StringUtils {
@@ -11,6 +12,7 @@ public class StringUtils {
                 matches.add(possibleMatch);
             }
         }
+        Collections.sort(matches);
         return matches;
     }
 }

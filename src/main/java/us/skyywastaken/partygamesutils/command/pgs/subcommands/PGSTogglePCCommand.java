@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
+package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;

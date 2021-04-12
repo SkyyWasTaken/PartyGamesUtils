@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
+package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
@@ -12,19 +12,20 @@ import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
 import java.util.List;
 
-public class PGSStartCommand implements SubCommand, PartyCommand {
+public class PGSClearCommand implements SubCommand, PartyCommand {
     private final SeekManager SEEK_MANAGER;
 
-    public PGSStartCommand(SeekManager passedSeekManager) {
+    public PGSClearCommand(SeekManager passedSeekManager) {
         this.SEEK_MANAGER = passedSeekManager;
     }
-
-
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        enableSeeking();
-        String messageString = EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
-        commandSender.addChatMessage(new ChatComponentText(messageString));
+        SEEK_MANAGER.clearSeekList();
+        String successMessage = EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
+                + "cleared " + EnumChatFormatting.GREEN + "the seeking list!";
+        if(Minecraft.getMinecraft().ingameGUI != null) {
+            Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(successMessage));
+        }
     }
 
     @Override
@@ -34,11 +35,7 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        enableSeeking();
-        HypixelUtils.sendPartyChatMessage("Seeking has been enabled!");
-    }
-
-    private void enableSeeking() {
-        SEEK_MANAGER.setSeekingEnabled(true);
+        SEEK_MANAGER.clearSeekList();
+        HypixelUtils.sendPartyChatMessage("Successfully cleared the seeking list!");
     }
 }

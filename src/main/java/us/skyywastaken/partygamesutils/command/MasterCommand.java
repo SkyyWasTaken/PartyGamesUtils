@@ -4,6 +4,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public abstract class MasterCommand {
 
     public List<String> getSubCommandTabCompletions(ICommandSender sender, String[] currentArgs, BlockPos blockPos) {
         if(currentArgs.length == 0) {
-            return Arrays.asList(SUB_COMMAND_HASH_MAP.keySet().toArray(new String[0]));
+            return new ArrayList<>(SUB_COMMAND_HASH_MAP.keySet());
         } else if(currentArgs.length == 1) {
             return StringUtils.getPartialMatches(currentArgs[0], SUB_COMMAND_HASH_MAP.keySet());
         } else if (subCommandExists(currentArgs[0])) {

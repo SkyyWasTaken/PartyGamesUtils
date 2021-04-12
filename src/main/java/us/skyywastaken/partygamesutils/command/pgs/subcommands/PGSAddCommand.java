@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
+package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -10,8 +10,6 @@ import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.misc.SeekManager;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class PGSAddCommand implements SubCommand, PartyCommand {

@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
+package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
@@ -12,17 +12,16 @@ import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
 import java.util.List;
 
-public class PGSClearCommand implements SubCommand, PartyCommand {
+public class PGSStopCommand implements SubCommand, PartyCommand {
     private final SeekManager SEEK_MANAGER;
 
-    public PGSClearCommand(SeekManager passedSeekManager) {
+    public PGSStopCommand(SeekManager passedSeekManager) {
         this.SEEK_MANAGER = passedSeekManager;
     }
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        SEEK_MANAGER.clearSeekList();
-        String successMessage = EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
-                + "cleared " + EnumChatFormatting.GREEN + "the seeking list!";
+        disableSeeking();
+        String successMessage = EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "DISABLED!";
         if(Minecraft.getMinecraft().ingameGUI != null) {
             Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(successMessage));
         }
@@ -35,7 +34,11 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        SEEK_MANAGER.clearSeekList();
-        HypixelUtils.sendPartyChatMessage("Successfully cleared the seeking list!");
+        disableSeeking();
+        HypixelUtils.sendPartyChatMessage("Seeking has been disabled!");
+    }
+
+    private void disableSeeking() {
+        SEEK_MANAGER.setSeekingEnabled(false);
     }
 }

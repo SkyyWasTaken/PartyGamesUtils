@@ -2,25 +2,26 @@ package us.skyywastaken.partygamesutils.command.pgs;
 
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scala.actors.threadpool.Arrays;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
-import us.skyywastaken.partygamesutils.command.pgs.SubCommands.PGSAddCommand;
-import us.skyywastaken.partygamesutils.command.pgs.SubCommands.PGSClearCommand;
-import us.skyywastaken.partygamesutils.command.pgs.SubCommands.PGSListCommand;
-import us.skyywastaken.partygamesutils.command.pgs.SubCommands.PGSRemoveCommand;
-import us.skyywastaken.partygamesutils.command.pgs.SubCommands.PGSStartCommand;
-import us.skyywastaken.partygamesutils.command.pgs.SubCommands.PGSStopCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
 import us.skyywastaken.partygamesutils.misc.SeekManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class PartyCommandManager {
-    private final PGSCommand P_G_SEEK;
+public class PGSPartyCommandManager {
     private final SeekManager SEEK_MANAGER;
     private final HashMap<String, PartyCommand> partyCommandHashMap;
     private final HashMap<String, Boolean> partyCommandPermissionsHashMap;
 
-    public PartyCommandManager(PGSCommand seekCommand, SeekManager passedSeekManager) {
-        P_G_SEEK = seekCommand;
+    public PGSPartyCommandManager(SeekManager passedSeekManager) {
         SEEK_MANAGER = passedSeekManager;
         partyCommandHashMap = new HashMap<>();
         partyCommandPermissionsHashMap = new HashMap<>();
@@ -65,5 +66,9 @@ public class PartyCommandManager {
 
     private void registerPartyCommand(String partyCommandName, PartyCommand partyCommand) {
         partyCommandHashMap.put(partyCommandName, partyCommand);
+    }
+
+    public List<String> getPartyCommandPermissions() {
+        return new ArrayList<>(partyCommandPermissionsHashMap.keySet());
     }
 }

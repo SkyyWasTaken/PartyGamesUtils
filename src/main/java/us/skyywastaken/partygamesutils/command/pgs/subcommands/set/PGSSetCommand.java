@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
+package us.skyywastaken.partygamesutils.command.pgs.subcommands.set;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -10,19 +10,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PGSSetCommand implements SubCommand {
+    private final PGSSettingsManager SETTINGS_MANAGER;
+
+    public PGSSetCommand(PGSSettingsManager passedSettingsManager) {
+        this.SETTINGS_MANAGER = passedSettingsManager;
+    }
+
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         String tooFewArgsFeedback = EnumChatFormatting.RED + "Not enough arguments!\n"
-                + EnumChatFormatting.WHITE + "To see correct usage, type /pgs set";
-        if(args.length < 3) {
+                + EnumChatFormatting.WHITE + "To see correct usage, type /pgs set help";
+        if(args.length < 2) {
             commandSender.addChatMessage(new ChatComponentText(tooFewArgsFeedback));
             return;
         }
-        String[] trimmedArgs = Arrays.copyOfRange(args, 1, args.length);
     }
 
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
-        return null;
+        return SETTINGS_MANAGER.getTabCompletions(args);
     }
 }
