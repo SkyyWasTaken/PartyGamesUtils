@@ -2,12 +2,15 @@ package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.misc.SeekManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
+
+import java.util.List;
 
 public class PGSStartCommand implements SubCommand, PartyCommand {
     private final SeekManager SEEK_MANAGER;
@@ -22,6 +25,11 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
         enableSeeking();
         String messageString = EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
         commandSender.addChatMessage(new ChatComponentText(messageString));
+    }
+
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
+        return null;
     }
 
     @Override

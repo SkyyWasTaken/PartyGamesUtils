@@ -1,6 +1,6 @@
 package us.skyywastaken.partygamesutils.command.pgs;
 
-import net.minecraft.command.CommandException;
+import com.sun.istack.internal.NotNull;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -43,7 +43,7 @@ public class PGSCommand extends MasterCommand implements ICommand {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String[] args){
         if(args.length >= 1 && subCommandExists(args[0])) {
             executeCommand(args[0], sender, args);
         } else {
@@ -58,7 +58,7 @@ public class PGSCommand extends MasterCommand implements ICommand {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        return null;
+        return getSubCommandTabCompletions(sender, args, pos);
     }
 
     @Override

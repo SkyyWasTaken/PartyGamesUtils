@@ -3,6 +3,7 @@ package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
@@ -10,6 +11,7 @@ import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.misc.SeekManager;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class PGSRemoveCommand implements SubCommand, PartyCommand {
     private final SeekManager SEEK_MANAGER;
@@ -31,6 +33,11 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
                         new ChatComponentText(addedGameMessage));
             }
         }
+    }
+
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
+        return null;
     }
 
     @Override

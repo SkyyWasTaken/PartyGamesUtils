@@ -1,11 +1,13 @@
 package us.skyywastaken.partygamesutils.command.pgs.SubCommands;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class PGSSetCommand implements SubCommand {
     @Override
@@ -17,5 +19,10 @@ public class PGSSetCommand implements SubCommand {
             return;
         }
         String[] trimmedArgs = Arrays.copyOfRange(args, 1, args.length);
+    }
+
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
+        return null;
     }
 }
