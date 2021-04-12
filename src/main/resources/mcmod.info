@@ -1,0 +1,16 @@
+[
+{
+  "modid": "partygamesutils",
+  "name": "Party Games Utils",
+  "description": "indev pg utils mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["SkyyWasTaken"],
+  "credits": "SkyyWasTaken",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
