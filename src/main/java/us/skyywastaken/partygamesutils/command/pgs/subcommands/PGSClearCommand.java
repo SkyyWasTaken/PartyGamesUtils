@@ -7,20 +7,20 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.misc.SeekManager;
+import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
 import java.util.List;
 
 public class PGSClearCommand implements SubCommand, PartyCommand {
-    private final SeekManager SEEK_MANAGER;
+    private final PGSManager PGS_MANAGER;
 
-    public PGSClearCommand(SeekManager passedSeekManager) {
-        this.SEEK_MANAGER = passedSeekManager;
+    public PGSClearCommand(PGSManager passedSeekManager) {
+        this.PGS_MANAGER = passedSeekManager;
     }
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        SEEK_MANAGER.clearSeekList();
+        PGS_MANAGER.clearSeekList();
         String successMessage = EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
                 + "cleared " + EnumChatFormatting.GREEN + "the seeking list!";
         if(Minecraft.getMinecraft().ingameGUI != null) {
@@ -35,7 +35,7 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        SEEK_MANAGER.clearSeekList();
+        PGS_MANAGER.clearSeekList();
         HypixelUtils.sendPartyChatMessage("Successfully cleared the seeking list!");
     }
 }

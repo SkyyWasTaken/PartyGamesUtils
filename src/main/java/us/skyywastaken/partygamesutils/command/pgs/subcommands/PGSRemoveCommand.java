@@ -8,14 +8,14 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.misc.SeekManager;
+import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 
 import java.util.List;
 
 public class PGSRemoveCommand implements SubCommand, PartyCommand {
-    private final SeekManager SEEK_MANAGER;
-    public PGSRemoveCommand(SeekManager passedSeekManager) {
-        this.SEEK_MANAGER = passedSeekManager;
+    private final PGSManager PGS_MANAGER;
+    public PGSRemoveCommand(PGSManager passedPGSManager) {
+        this.PGS_MANAGER = passedPGSManager;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
         playerSP.sendChatMessage("/pchat Game(s) removed successfully!");
     }
 
-    private void removeGame(String gameToAdd) {
-        SEEK_MANAGER.removeSeekedGame(gameToAdd);
+    private void removeGame(String gameToRemove) {
+        PGS_MANAGER.removeSeekedGame(gameToRemove);
     }
 
     private void removeGames(String[] passedGameStrings) {

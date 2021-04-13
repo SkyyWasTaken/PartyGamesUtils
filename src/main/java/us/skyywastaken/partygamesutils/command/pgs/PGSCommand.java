@@ -4,30 +4,30 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.command.MasterCommand;
+import us.skyywastaken.partygamesutils.command.PartyCommand;
+import us.skyywastaken.partygamesutils.command.SubCommand;
+import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandManager;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSHelpCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSPartyPermissionsCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.set.PGSSetCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSTogglePCCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.set.PGSSettingsManager;
 import us.skyywastaken.partygamesutils.misc.SeekManager;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PGSCommand extends MasterCommand implements ICommand {
-    private final SeekManager SEEK_MANAGER;
-    private final PGSSettingsManager SETTINGS_MANAGER;
-    private final PGSPartyCommandManager PARTY_COMMAND_MANAGER;
+    private final PGSManager PGS_MANAGER;
 
-    public PGSCommand(SeekManager passedSeekManager, PGSPartyCommandManager passedPartyCommandManager) {
-        this.SEEK_MANAGER = passedSeekManager;
-        this.PARTY_COMMAND_MANAGER = passedPartyCommandManager;
-        this.SETTINGS_MANAGER = new PGSSettingsManager(SEEK_MANAGER, PARTY_COMMAND_MANAGER);
+    public PGSCommand(PGSManager passedPGSManager) {
+        this.PGS_MANAGER = passedPGSManager;
         registerSubCommands();
     }
 
@@ -76,14 +76,14 @@ public class PGSCommand extends MasterCommand implements ICommand {
     }
 
     private void registerSubCommands() {
-        registerSubCommand("help", new PGSHelpCommand());
-        registerSubCommand("set", new PGSSetCommand(SETTINGS_MANAGER));
-        registerSubCommand("clear", new PGSClearCommand(SEEK_MANAGER));
-        registerSubCommand("add", new PGSAddCommand(SEEK_MANAGER));
-        registerSubCommand("remove", new PGSRemoveCommand(SEEK_MANAGER));
-        registerSubCommand("list", new PGSListCommand(SEEK_MANAGER));
-        registerSubCommand("togglepartycommands", new PGSTogglePCCommand(SEEK_MANAGER));
-        registerSubCommand("start", new PGSStartCommand(SEEK_MANAGER));
-        registerSubCommand("stop", new PGSStopCommand(SEEK_MANAGER));
+        super.registerSubCommand("help", new PGSHelpCommand());
+        super.registerSubCommand("PartyPermissions", new PGSPartyPermissionsCommand(PGS_MANAGER));
+        super.registerSubCommand("clear", new PGSClearCommand(PGS_MANAGER));
+        super.registerSubCommand("add", new PGSAddCommand(PGS_MANAGER));
+        super.registerSubCommand("remove", new PGSRemoveCommand(PGS_MANAGER));
+        super.registerSubCommand("list", new PGSListCommand(PGS_MANAGER));
+        super.registerSubCommand("togglepartycommands", new PGSTogglePCCommand(PGS_MANAGER));
+        super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
+        super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
     }
 }

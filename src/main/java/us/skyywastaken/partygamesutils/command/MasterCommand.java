@@ -6,6 +6,7 @@ import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,14 +30,21 @@ public abstract class MasterCommand {
         return SUB_COMMAND_HASH_MAP.containsKey(subCommandName);
     }
 
+    public HashMap<String, SubCommand> getSubCommands() {
+        return new HashMap<>(SUB_COMMAND_HASH_MAP);
+    }
+
     public List<String> getSubCommandTabCompletions(ICommandSender sender, String[] currentArgs, BlockPos blockPos) {
+        List<String> returnList = null;
         if(currentArgs.length == 0) {
-            return new ArrayList<>(SUB_COMMAND_HASH_MAP.keySet());
+            returnList = new ArrayList<>(SUB_COMMAND_HASH_MAP.keySet());
         } else if(currentArgs.length == 1) {
-            return StringUtils.getPartialMatches(currentArgs[0], SUB_COMMAND_HASH_MAP.keySet());
+            returnList = StringUtils.getPartialMatches(currentArgs[0], SUB_COMMAND_HASH_MAP.keySet());
         } else if (subCommandExists(currentArgs[0])) {
-            return SUB_COMMAND_HASH_MAP.get(currentArgs[0]).getTabCompletions(sender, currentArgs, blockPos);
+            returnList = SUB_COMMAND_HASH_MAP.get(currentArgs[0]).getTabCompletions(sender, currentArgs, blockPos);
         }
-        return null;
+        if(returnList == null) return null;
+        Collections.sort(returnList);
+        return StringUtils.getPartialMatches(currentArgs[currentArgs.length-1], returnList);
     }
 }

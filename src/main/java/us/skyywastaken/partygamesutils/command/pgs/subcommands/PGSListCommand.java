@@ -6,22 +6,21 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.misc.SeekManager;
+import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PGSListCommand implements SubCommand, PartyCommand {
-    private final SeekManager SEEK_MANAGER;
+    private final PGSManager SEEK_MANAGER;
 
-    public PGSListCommand(SeekManager passedSeekManager) {
+    public PGSListCommand(PGSManager passedSeekManager) {
         this.SEEK_MANAGER = passedSeekManager;
     }
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         String messageString;
-        ArrayList<String> seekList = SEEK_MANAGER.getSeekList();
+        List<String> seekList = SEEK_MANAGER.getSeekList();
         int seekListSize = seekList.size();
         if(seekListSize <= 0) {
             messageString = EnumChatFormatting.YELLOW + "There are no games in the seek list!";
@@ -29,9 +28,9 @@ public class PGSListCommand implements SubCommand, PartyCommand {
             String seekListString = String.join(EnumChatFormatting.YELLOW + ", "
                     + EnumChatFormatting.AQUA, seekList);
             if(seekListSize == 1) {
-                messageString = EnumChatFormatting.GREEN + "Current game: " + seekListString;
+                messageString = EnumChatFormatting.GREEN + "Current game: " + EnumChatFormatting.AQUA + seekListString;
             } else {
-                messageString = EnumChatFormatting.GREEN + "Current games: " + seekListString;
+                messageString = EnumChatFormatting.GREEN + "Current games: " + EnumChatFormatting.AQUA + seekListString;
             }
         }
         commandSender.addChatMessage(new ChatComponentText(messageString));
@@ -45,7 +44,7 @@ public class PGSListCommand implements SubCommand, PartyCommand {
     @Override
     public void onPartyCommand(String[] args) {
         String messageString;
-        ArrayList<String> seekList = SEEK_MANAGER.getSeekList();
+        List<String> seekList = SEEK_MANAGER.getSeekList();
         int seekListSize = seekList.size();
         if(seekListSize <= 0) {
             messageString = "There are no games in the seek list!";
@@ -57,6 +56,10 @@ public class PGSListCommand implements SubCommand, PartyCommand {
                 messageString = "Current games: " + seekListString;
             }
         }
-        HypixelUtils.sendPartyChatMessage(messageString);
+        if(messageString.length() > 246) {
+            HypixelUtils.sendPartyChatMessage("The seek list is too large to send!");
+        } else {
+            HypixelUtils.sendPartyChatMessage(messageString);
+        }
     }
 }

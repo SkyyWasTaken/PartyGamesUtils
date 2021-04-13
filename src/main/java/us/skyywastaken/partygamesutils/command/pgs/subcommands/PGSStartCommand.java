@@ -6,16 +6,16 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.misc.SeekManager;
+import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
 import java.util.List;
 
 public class PGSStartCommand implements SubCommand, PartyCommand {
-    private final SeekManager SEEK_MANAGER;
+    private final PGSManager PGS_MANAGER;
 
-    public PGSStartCommand(SeekManager passedSeekManager) {
-        this.SEEK_MANAGER = passedSeekManager;
+    public PGSStartCommand(PGSManager passedPGSManager) {
+        this.PGS_MANAGER = passedPGSManager;
     }
 
 
@@ -38,6 +38,6 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
     }
 
     private void enableSeeking() {
-        SEEK_MANAGER.setSeekingEnabled(true);
+        PGS_MANAGER.setSeekingEnabled(true);
     }
 }

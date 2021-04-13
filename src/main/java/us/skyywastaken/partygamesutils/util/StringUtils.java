@@ -1,5 +1,7 @@
 package us.skyywastaken.partygamesutils.util;
 
+import net.minecraft.util.EnumChatFormatting;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,5 +16,13 @@ public class StringUtils {
         }
         Collections.sort(matches);
         return matches;
+    }
+
+    public static String getEnabledDisabledString(boolean isEnabled) {
+        if(isEnabled) {
+            return EnumChatFormatting.GREEN + "Enabled";
+        }else {
+            return EnumChatFormatting.DARK_RED + "Disabled";
+        }
     }
 }

@@ -8,15 +8,15 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
-import us.skyywastaken.partygamesutils.misc.SeekManager;
+import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 
 import java.util.List;
 
 public class PGSAddCommand implements SubCommand, PartyCommand {
-    private final SeekManager SEEK_MANAGER;
+    private final PGSManager PGS_MANAGER;
 
-    public PGSAddCommand(SeekManager passedSeekManager) {
-        this.SEEK_MANAGER = passedSeekManager;
+    public PGSAddCommand(PGSManager passedPGSManager) {
+        this.PGS_MANAGER = passedPGSManager;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
     }
 
     private void addGame(String gameToAdd) {
-        SEEK_MANAGER.addSeekedGame(gameToAdd);
+        PGS_MANAGER.addSeekedGame(gameToAdd);
     }
 
     private void addGames(String[] passedGameStrings) {
