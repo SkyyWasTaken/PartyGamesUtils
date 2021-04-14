@@ -26,7 +26,8 @@ public class SeekManager {
             String gameRow = ScoreboardUtils.getLineFromScoreboard(13);
             String gameNameRow = ScoreboardUtils.getNoPrefixGameName();
             if (gameRow.equals("Game:") && gameCanBeSkipped()) {
-                if (!PGS_MANAGER.isGameSought(gameNameRow)) {
+                boolean isGameOnList = PGS_MANAGER.isGameSought(gameNameRow);
+                if ((!isGameOnList && !PGS_MANAGER.isBlacklistEnabled()) || (isGameOnList && PGS_MANAGER.isBlacklistEnabled())) {
                     Minecraft.getMinecraft().thePlayer.sendChatMessage("/play arcade_party_games_1");
                 } else {
                     if (!playerWasNotified) {
@@ -43,7 +44,7 @@ public class SeekManager {
     private void notifyPlayer(String gameName) {
         EntityPlayerSP clientPlayer = Minecraft.getMinecraft().thePlayer;
         if (PGS_MANAGER.getPartyCommandsEnabled()) {
-            clientPlayer.sendChatMessage("/pchat The correct game has been found! This is " + gameName);
+            clientPlayer.sendChatMessage("/pchat A correct game has been found! This is " + gameName);
         }
         BlockPos playerPos = clientPlayer.getPosition();
         Minecraft.getMinecraft().theWorld.playSound(playerPos.getX(), playerPos.getY(), playerPos.getZ(),

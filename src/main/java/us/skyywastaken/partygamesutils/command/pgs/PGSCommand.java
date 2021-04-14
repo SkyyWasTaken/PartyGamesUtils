@@ -13,6 +13,7 @@ import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSPartyPermissio
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSToggleBlacklistCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSTogglePCCommand;
 
 import java.util.Collections;
@@ -81,5 +82,6 @@ public class PGSCommand extends MasterCommand implements ICommand {
         super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
         super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
         super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(PGS_MANAGER));
+        super.registerSubCommand("ToggleBlacklist", new PGSToggleBlacklistCommand(PGS_MANAGER));
     }
 }

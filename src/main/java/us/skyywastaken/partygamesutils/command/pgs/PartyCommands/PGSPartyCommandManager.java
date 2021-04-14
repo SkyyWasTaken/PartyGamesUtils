@@ -10,6 +10,7 @@ import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSToggleBlacklistCommand;
 
 import java.util.HashMap;
 
@@ -48,6 +49,7 @@ public class PGSPartyCommandManager {
         registerPartyCommand(PGSPartyCommandType.LIST, new PGSListCommand(PGS_MANAGER));
         registerPartyCommand(PGSPartyCommandType.START, new PGSStartCommand(PGS_MANAGER));
         registerPartyCommand(PGSPartyCommandType.STOP, new PGSStopCommand(PGS_MANAGER));
+        registerPartyCommand(PGSPartyCommandType.TOGGLEBLACKLIST, new PGSToggleBlacklistCommand(PGS_MANAGER));
     }
 
     private void registerPartyCommand(PGSPartyCommandType partyCommandType, PartyCommand partyCommand) {

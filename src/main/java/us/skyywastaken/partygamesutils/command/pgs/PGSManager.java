@@ -11,6 +11,7 @@ public class PGSManager {
     private final HashMap<PGSPartyCommandType, Boolean> partyCommandPermissionsHashMap;
     private boolean partyCommandsEnabled;
     private boolean seekingEnabled;
+    private boolean blacklistEnabled;
     private int doNotSeekThreshold;
 
     public PGSManager() {
@@ -88,5 +89,13 @@ public class PGSManager {
         if (newMax < 0) {
             doNotSeekThreshold = 0;
         } else doNotSeekThreshold = Math.min(newMax, 8);
+    }
+
+    public boolean isBlacklistEnabled() {
+        return blacklistEnabled;
+    }
+
+    public void setBlacklistEnabled(boolean newValue) {
+        blacklistEnabled = newValue;
     }
 }

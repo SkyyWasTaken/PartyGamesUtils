@@ -25,4 +25,12 @@ public class StringUtils {
             return EnumChatFormatting.DARK_RED + "Disabled";
         }
     }
+
+    public static String getColorlessEnabledDisabledString(boolean isEnabled) {
+        if (isEnabled) {
+            return "Enabled";
+        } else {
+            return "Disabled";
+        }
+    }
 }

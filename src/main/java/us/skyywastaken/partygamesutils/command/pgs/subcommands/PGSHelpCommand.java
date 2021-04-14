@@ -58,20 +58,23 @@ public class PGSHelpCommand implements SubCommand {
                 + "under Hypixel's rules. Use at your own risk!\n"
                 + commandColor + "/pgs add <game1>, <game2>, etc.: " + descriptionColor
                 + "Adds games to the seek list\n"
-                + commandColor + "/pgs start: " + descriptionColor + "Starts game seeking\n"
-                + commandColor + "/pgs stop: " + descriptionColor + "Stops game seeking\n"
+                + commandColor + "/pgs remove <game1>, <game2>, etc.:" + descriptionColor
+                + "Removes games from the seek list\n"
                 + commandColor + "/pgs list: " + descriptionColor + "Lists games\n"
-                + commandColor + "/pgs togglepartycommands: " + descriptionColor
-                + "Lets party members add/remove games in party chat. Prefix: \".\"";
+                + commandColor + "/pgs start: " + descriptionColor + "Starts game seeking\n"
+                + commandColor + "/pgs stop: " + descriptionColor + "Stops game seeking";
         this.HELP_PAGES.put("1", helpPageOne);
 
         String helpPageTwo = getHelpHeader(2, 2)
                 + commandColor + "/pgs clear: " + descriptionColor + "Clears the seek list\n"
-                + commandColor + "/pgs set: " + descriptionColor + "PGS-related settings management\n"
                 + commandColor + "/pgs PartyPermissions: " + descriptionColor
                 + "Lets you toggle party permissions on or off\n"
+                + commandColor + "/pgs togglepartycommands: " + descriptionColor
+                + "Lets party members run commands in party chat. Prefix: \".\"\n"
                 + commandColor + "/pgs DoNotSeekThreshold: " + descriptionColor + "Lets you modify the do-not-seek " +
-                "threshold, which prevents PGS from pulling you out mid-game";
+                "threshold, which prevents PGS from pulling you out mid-game\n"
+                + commandColor + "/pgs ToggleBlacklist: " + descriptionColor
+                + "Toggles whether or not the seek list is a blacklist";
         this.HELP_PAGES.put("2", helpPageTwo);
     }
 }

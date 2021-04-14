@@ -1,7 +1,7 @@
 package us.skyywastaken.partygamesutils.command.pgs.PartyCommands;
 
 public enum PGSPartyCommandType {
-    ADD, REMOVE, CLEAR, LIST, START, STOP;
+    ADD, REMOVE, CLEAR, LIST, START, STOP, TOGGLEBLACKLIST;
 
     public static PGSPartyCommandType fromString(String string) {
         String modifiedString = string.toUpperCase().trim();
