@@ -32,6 +32,7 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
+        System.out.println("got the command");
         enableSeeking();
         sendSuccessMessage(true, null);
     }

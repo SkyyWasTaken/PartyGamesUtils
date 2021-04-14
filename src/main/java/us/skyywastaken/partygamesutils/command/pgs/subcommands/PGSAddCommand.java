@@ -39,9 +39,11 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
     public void onPartyCommand(String[] args) {
         if (args.length < 2) {
             sendTooFewArgsFailureMessage(true, null);
+            return;
         }
-        addGames(getGameListStringsFromArgs(args));
-        sendPartySuccessMessage();
+        String[] gameListString = getGameListStringsFromArgs(args);
+        addGames(gameListString);
+        sendPartySuccessMessage(gameListString.length);
     }
 
 
@@ -75,8 +77,12 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
         }
     }
 
-    private void sendPartySuccessMessage() {
-        HypixelUtils.sendPartyChatMessage("Game(s) added successfully!");
+    private void sendPartySuccessMessage(int gamesAdded) {
+        if(gamesAdded == 1) {
+            HypixelUtils.sendPartyChatMessage("Game added successfully!");
+        } else {
+            HypixelUtils.sendPartyChatMessage("Game(s) added successfully!");
+        }
     }
 
     private void sendClientSuccessMessages(ICommandSender commandSender, String[] addedGames) {
