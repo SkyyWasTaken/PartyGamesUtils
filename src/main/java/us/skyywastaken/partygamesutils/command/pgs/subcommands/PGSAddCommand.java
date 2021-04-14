@@ -48,7 +48,9 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
 
 
     private void addGame(String gameToAdd) {
-        PGS_MANAGER.addSoughtGame(gameToAdd);
+        if(!PGS_MANAGER.isGameSought(gameToAdd)){
+            PGS_MANAGER.addSoughtGame(gameToAdd);
+        }
     }
 
     private void addGames(String[] passedGameStrings) {
@@ -91,7 +93,7 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
     }
 
     private String getClientSuccessMessage(String addedGame) {
-        return EnumChatFormatting.GREEN + "Added " + EnumChatFormatting.YELLOW + addedGame
+        return EnumChatFormatting.GREEN + "Added " + EnumChatFormatting.YELLOW + addedGame.trim()
                 + EnumChatFormatting.GREEN + " to the seek list!";
     }
 

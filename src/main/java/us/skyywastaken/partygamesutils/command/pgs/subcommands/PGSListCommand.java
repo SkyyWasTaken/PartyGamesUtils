@@ -85,7 +85,7 @@ public class PGSListCommand implements SubCommand, PartyCommand {
             if(isPartyCommand) {
                 return "Currently sought games: ";
             } else {
-                return EnumChatFormatting.GREEN + "Currently sought games:";
+                return EnumChatFormatting.GREEN + "Currently sought games: ";
             }
         }
     }

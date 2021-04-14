@@ -69,7 +69,9 @@ public class PGSHelpCommand implements SubCommand {
                 + commandColor + "/pgs clear: " + descriptionColor + "Clears the seek list\n"
                 + commandColor + "/pgs set: " + descriptionColor + "PGS-related settings management\n"
                 + commandColor + "/pgs PartyPermissions: " + descriptionColor
-                + "Lets you toggle party permissions on or off";
+                + "Lets you toggle party permissions on or off\n"
+                + commandColor + "/pgs DoNotSeekThreshold: " + descriptionColor + "Lets you modify the do-not-seek " +
+                "threshold, which prevents PGS from pulling you out mid-game";
         this.HELP_PAGES.put("2", helpPageTwo);
     }
 }

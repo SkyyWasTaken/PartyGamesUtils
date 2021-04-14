@@ -91,7 +91,7 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private String getClientSuccessMessage(String addedGame) {
-        return EnumChatFormatting.GREEN + "Removed " + EnumChatFormatting.YELLOW + addedGame
+        return EnumChatFormatting.GREEN + "Removed " + EnumChatFormatting.YELLOW + addedGame.trim()
                 + EnumChatFormatting.GREEN + " from the seek list!";
     }
 

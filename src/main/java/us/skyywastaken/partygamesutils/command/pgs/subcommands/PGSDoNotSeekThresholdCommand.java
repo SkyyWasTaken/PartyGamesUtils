@@ -9,10 +9,10 @@ import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 
 import java.util.List;
 
-public class PGSNoSkipThresholdCommand implements SubCommand {
+public class PGSDoNotSeekThresholdCommand implements SubCommand {
     private final PGSManager PGS_MANAGER;
 
-    public PGSNoSkipThresholdCommand(PGSManager passedPGSManager) {
+    public PGSDoNotSeekThresholdCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
     }
 
@@ -23,7 +23,7 @@ public class PGSNoSkipThresholdCommand implements SubCommand {
             sendHelpMessage(commandSender);
         } else {
             int newValue = attemptToParseInt(commandSender, args[1]);
-            PGS_MANAGER.setDoNotSkipThreshold(newValue);
+            PGS_MANAGER.setDoNotSeekThreshold(newValue);
             String successMessage = getSuccessMessage(newValue);
             commandSender.addChatMessage(new ChatComponentText(successMessage));
         }
@@ -74,6 +74,6 @@ public class PGSNoSkipThresholdCommand implements SubCommand {
                 + EnumChatFormatting.GOLD + "To modify the no-skip threshold, type /pgs NoSkipThreshold newNumber\n"
                 + EnumChatFormatting.GRAY + "0 = always fine to skip, 4 = not fine to skip on game 4 and over\n"
                 + EnumChatFormatting.GREEN + "Current no-skip threshold: " + EnumChatFormatting.YELLOW + "Game "
-                + PGS_MANAGER.getDoNotSkipThreshold();
+                + PGS_MANAGER.getDoNotSeekThreshold();
     }
 }

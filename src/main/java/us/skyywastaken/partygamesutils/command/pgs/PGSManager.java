@@ -9,14 +9,14 @@ import java.util.List;
 public class PGSManager {
     private boolean partyCommandsEnabled;
     private boolean seekingEnabled;
-    private int doNotSkipThreshold;
+    private int doNotSeekThreshold;
     private final ArrayList<String> SEEK_LIST;
     private final HashMap<PGSPartyCommandType, Boolean> partyCommandPermissionsHashMap;
 
     public PGSManager() {
         this.SEEK_LIST = new ArrayList<>();
         this.partyCommandsEnabled = false;
-        doNotSkipThreshold = 4;
+        doNotSeekThreshold = 4;
         this.partyCommandPermissionsHashMap = new HashMap<>();
         this.seekingEnabled = false;
         initializePartyCommandPermissions();
@@ -80,13 +80,13 @@ public class PGSManager {
         return seekingEnabled;
     }
 
-    public int getDoNotSkipThreshold() {
-        return doNotSkipThreshold;
+    public int getDoNotSeekThreshold() {
+        return doNotSeekThreshold;
     }
 
-    public void setDoNotSkipThreshold(int newMax) {
+    public void setDoNotSeekThreshold(int newMax) {
         if(newMax < 0) {
-            doNotSkipThreshold = 0;
-        } else doNotSkipThreshold = Math.min(newMax, 8);
+            doNotSeekThreshold = 0;
+        } else doNotSeekThreshold = Math.min(newMax, 8);
     }
 }

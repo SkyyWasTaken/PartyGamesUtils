@@ -4,25 +4,19 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.command.MasterCommand;
-import us.skyywastaken.partygamesutils.command.PartyCommand;
-import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandManager;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSHelpCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSNoSkipThresholdCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSDoNotSeekThresholdCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSPartyPermissionsCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSTogglePCCommand;
-import us.skyywastaken.partygamesutils.misc.SeekManager;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PGSCommand extends MasterCommand implements ICommand {
     private final PGSManager PGS_MANAGER;
@@ -86,6 +80,6 @@ public class PGSCommand extends MasterCommand implements ICommand {
         super.registerSubCommand("togglepartycommands", new PGSTogglePCCommand(PGS_MANAGER));
         super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
         super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
-        super.registerSubCommand("DoNotSkipThreshold", new PGSNoSkipThresholdCommand(PGS_MANAGER));
+        super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(PGS_MANAGER));
     }
 }

@@ -53,6 +53,6 @@ public class SeekManager {
     private boolean gameCanBeSkipped() {
         String currentGameNumberRow = ScoreboardUtils.getGameNumberRow();
         int gameNumber = Integer.parseInt(String.valueOf(currentGameNumberRow.charAt(currentGameNumberRow.indexOf("/")-1)));
-        return gameNumber < PGS_MANAGER.getDoNotSkipThreshold();
+        return gameNumber < PGS_MANAGER.getDoNotSeekThreshold();
     }
 }
