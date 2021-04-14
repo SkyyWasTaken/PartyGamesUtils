@@ -78,7 +78,7 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
     }
 
     private void sendPartySuccessMessage(int gamesAdded) {
-        if(gamesAdded == 1) {
+        if (gamesAdded == 1) {
             HypixelUtils.sendPartyChatMessage("Game added successfully!");
         } else {
             HypixelUtils.sendPartyChatMessage("Game(s) added successfully!");

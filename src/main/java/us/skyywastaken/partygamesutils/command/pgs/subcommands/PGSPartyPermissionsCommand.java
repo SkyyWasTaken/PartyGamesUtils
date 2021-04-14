@@ -41,7 +41,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
         if (args.length == 2) {
-            return Arrays.asList(new String[]{"add", "remove", "clear", "list", "start", "stop"});
+            return Arrays.asList("add", "remove", "clear", "list", "start", "stop", "toggleblacklist");
         } else {
             return null;
         }
@@ -99,7 +99,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     }
 
     private List<String> getComponentStringList() {
-        return Arrays.asList(new String[]{"Add", "Remove", "Clear", "List", "Start", "Stop", "ToggleBlacklist"});
+        return Arrays.asList("Add", "Remove", "Clear", "List", "Start", "Stop", "ToggleBlacklist");
     }
 
     private ChatComponentText getPartyCommandChatComponent(String permissionName) {

@@ -57,9 +57,11 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
             return EnumChatFormatting.GOLD + "You can't use a value less than 0! Defaulting to 0...";
         } else if (newValue > 8) {
             return EnumChatFormatting.GOLD + "You can't use a value over 8! Defaulting to 8...";
+        } else if (newValue == 0) {
+            return EnumChatFormatting.GREEN + "The no-seek threshold has been " + EnumChatFormatting.YELLOW + "disabled!";
         } else {
-            return EnumChatFormatting.GREEN + "The no-skip threshold has been set to "
-                    + EnumChatFormatting.YELLOW + newValue + EnumChatFormatting.GREEN + "!";
+            return EnumChatFormatting.GREEN + "The no-seek threshold has been set to " + EnumChatFormatting.YELLOW
+                    + "Game " + newValue + EnumChatFormatting.GREEN + "!";
         }
     }
 
@@ -71,9 +73,10 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
     private String getHelpMessage() {
         return EnumChatFormatting.AQUA + "----------" + EnumChatFormatting.YELLOW
                 + "/pgs NoSkipThreshold" + EnumChatFormatting.AQUA + "----------\n"
-                + EnumChatFormatting.GOLD + "To modify the no-skip threshold, type /pgs NoSkipThreshold newNumber\n"
-                + EnumChatFormatting.GRAY + "0 = always fine to skip, 4 = not fine to skip on game 4 and over\n"
-                + EnumChatFormatting.GREEN + "Current no-skip threshold: " + EnumChatFormatting.YELLOW + "Game "
+                + EnumChatFormatting.GOLD + "To modify the no-seek threshold, type /pgs NoSkipThreshold newNumber\n"
+                + EnumChatFormatting.GRAY + "Examples: 0 = always fine to pull me out, 4 = don't pull me out on game 4 and over, " +
+                "5 = don't pull me out on game 5 and over, etc.\n"
+                + EnumChatFormatting.GREEN + "Current no-seek threshold: " + EnumChatFormatting.YELLOW + "Game "
                 + PGS_MANAGER.getDoNotSeekThreshold();
     }
 }

@@ -57,10 +57,15 @@ public class SeekManager {
     }
 
     private boolean gameCanBeSkipped() {
+        int doNotSeekThreshold = PGS_MANAGER.getDoNotSeekThreshold();
+        if (doNotSeekThreshold == 0) {
+            return true;
+        }
         String currentGameNumberRow = ScoreboardUtils.getGameNumberRow();
         int index = currentGameNumberRow.indexOf("/") - 1;
-        if (currentGameNumberRow.length() <= index) return false;
+        if (currentGameNumberRow.length() <= index || index < 0)
+            return false; // This fixes a race condition that can crash the game.
         int gameNumber = Integer.parseInt(String.valueOf(currentGameNumberRow.charAt(index)));
-        return gameNumber < PGS_MANAGER.getDoNotSeekThreshold();
+        return gameNumber < doNotSeekThreshold;
     }
 }

@@ -78,7 +78,7 @@ public class PGSCommand extends MasterCommand implements ICommand {
         super.registerSubCommand("add", new PGSAddCommand(PGS_MANAGER));
         super.registerSubCommand("remove", new PGSRemoveCommand(PGS_MANAGER));
         super.registerSubCommand("list", new PGSListCommand(PGS_MANAGER));
-        super.registerSubCommand("togglepartycommands", new PGSTogglePCCommand(PGS_MANAGER));
+        super.registerSubCommand("TogglePartyCommands", new PGSTogglePCCommand(PGS_MANAGER));
         super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
         super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
         super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(PGS_MANAGER));

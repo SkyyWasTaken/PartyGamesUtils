@@ -12,7 +12,6 @@ import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSToggleBlacklistCommand;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class PGSPartyCommandManager {
@@ -27,7 +26,7 @@ public class PGSPartyCommandManager {
 
     @SubscribeEvent
     public void onReceiveChatMessage(ClientChatReceivedEvent chatReceivedEvent) {
-        if(!PGS_MANAGER.getPartyCommandsEnabled()) {
+        if (!PGS_MANAGER.getPartyCommandsEnabled()) {
             return;
         }
         String receivedMessage = chatReceivedEvent.message.getUnformattedText();

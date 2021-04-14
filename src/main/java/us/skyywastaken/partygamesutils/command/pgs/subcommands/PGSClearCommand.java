@@ -49,10 +49,10 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
 
     private String getSuccessMessage(boolean isPartyCommand) {
         if (isPartyCommand) {
-            return "Successfully cleared the seeking list!";
+            return "Successfully cleared the seek list!";
         } else {
             return EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
-                    + "cleared " + EnumChatFormatting.GREEN + "the seeking list!";
+                    + "cleared " + EnumChatFormatting.GREEN + "the seek list!";
         }
     }
 }
