@@ -8,12 +8,12 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import scala.actors.threadpool.Arrays;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandType;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -99,7 +99,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     }
 
     private List<String> getComponentStringList() {
-        return Arrays.asList(new String[]{"Add", "Remove", "Clear", "List", "Start", "Stop"});
+        return Arrays.asList(new String[]{"Add", "Remove", "Clear", "List", "Start", "Stop", "ToggleBlacklist"});
     }
 
     private ChatComponentText getPartyCommandChatComponent(String permissionName) {

@@ -26,6 +26,9 @@ public class PGSPartyCommandManager {
 
     @SubscribeEvent
     public void onReceiveChatMessage(ClientChatReceivedEvent chatReceivedEvent) {
+        if (!PGS_MANAGER.getPartyCommandsEnabled()) {
+            return;
+        }
         String receivedMessage = chatReceivedEvent.message.getUnformattedText();
         if (receivedMessage.startsWith("Party", 2) && receivedMessage.contains(".pgs")) {
             int commandStartIndex = receivedMessage.indexOf(".pgs");

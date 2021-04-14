@@ -63,6 +63,7 @@ public class PGSManager {
         partyCommandPermissionsHashMap.put(PGSPartyCommandType.LIST, true);
         partyCommandPermissionsHashMap.put(PGSPartyCommandType.START, false);
         partyCommandPermissionsHashMap.put(PGSPartyCommandType.STOP, false);
+        partyCommandPermissionsHashMap.put(PGSPartyCommandType.TOGGLEBLACKLIST, true);
     }
 
     public void updatePartyPermission(PGSPartyCommandType permissionType, boolean newValue) {

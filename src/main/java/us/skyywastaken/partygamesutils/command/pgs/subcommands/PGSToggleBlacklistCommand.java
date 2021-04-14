@@ -23,7 +23,7 @@ public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         toggleBlacklist();
-        sendSuccessMessage(true, commandSender);
+        sendSuccessMessage(false, commandSender);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
     @Override
     public void onPartyCommand(String[] args) {
         toggleBlacklist();
-        sendSuccessMessage(false, null);
+        sendSuccessMessage(true, null);
     }
 
     private void sendSuccessMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {

@@ -39,9 +39,11 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     public void onPartyCommand(String[] args) {
         if (args.length < 2) {
             sendTooFewArgsFailureMessage(true, null);
+            return;
         }
-        removeGames(getGameListStringsFromArgs(args));
-        sendPartySuccessMessage();
+        String[] gameList = getGameListStringsFromArgs(args);
+        getGameListStringsFromArgs(args);
+        sendPartySuccessMessage(gameList.length);
     }
 
 
@@ -73,8 +75,12 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
         }
     }
 
-    private void sendPartySuccessMessage() {
-        HypixelUtils.sendPartyChatMessage("Game(s) removed successfully!");
+    private void sendPartySuccessMessage(int gamesAdded) {
+        if (gamesAdded == 1) {
+            HypixelUtils.sendPartyChatMessage("Game removed successfully!");
+        } else {
+            HypixelUtils.sendPartyChatMessage("Game(s) removed successfully!");
+        }
     }
 
     private void sendClientSuccessMessages(ICommandSender commandSender, String[] addedGames) {
