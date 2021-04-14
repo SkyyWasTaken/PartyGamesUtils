@@ -49,7 +49,7 @@ public class SeekManager {
         if (PGS_MANAGER.getPartyCommandsEnabled()) {
             HypixelUtils.sendPartyChatMessage("I've found a game you're looking for!");
         } else {
-            clientPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "The correct game has been found"));
+            clientPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "A good game has been found!"));
         }
         BlockPos playerPos = clientPlayer.getPosition();
         Minecraft.getMinecraft().theWorld.playSound(playerPos.getX(), playerPos.getY(), playerPos.getZ(),
