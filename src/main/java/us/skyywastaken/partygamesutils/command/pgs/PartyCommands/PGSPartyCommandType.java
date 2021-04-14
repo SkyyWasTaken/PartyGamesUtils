@@ -7,7 +7,7 @@ public enum PGSPartyCommandType {
         String modifiedString = string.toUpperCase().trim();
         try {
             return valueOf(modifiedString);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return null;
         }
     }

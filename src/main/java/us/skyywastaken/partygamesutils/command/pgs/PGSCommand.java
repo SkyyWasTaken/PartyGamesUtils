@@ -6,9 +6,9 @@ import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.command.MasterCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSDoNotSeekThresholdCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSHelpCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSDoNotSeekThresholdCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSPartyPermissionsCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
@@ -42,8 +42,8 @@ public class PGSCommand extends MasterCommand implements ICommand {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args){
-        if(args.length >= 1 && subCommandExists(args[0])) {
+    public void processCommand(ICommandSender sender, String[] args) {
+        if (args.length >= 1 && subCommandExists(args[0])) {
             executeCommand(args[0], sender, args);
         } else {
             executeCommand("help", sender, args);

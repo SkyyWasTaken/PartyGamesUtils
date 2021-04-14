@@ -26,11 +26,11 @@ public class PGSPartyPermissionsCommand implements SubCommand {
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if(args.length < 2) {
+        if (args.length < 2) {
             commandSender.addChatMessage(getPartyPermissionsMessage());
         } else if (args.length == 2) {
             PGSPartyCommandType partyCommandType = PGSPartyCommandType.fromString(args[1]);
-            if(partyCommandType == null) {
+            if (partyCommandType == null) {
                 sendInvalidPermissionMessage(commandSender, args[0]);
             } else {
                 attemptToTogglePermission(commandSender, partyCommandType);
@@ -40,7 +40,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
 
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
-        if(args.length == 2) {
+        if (args.length == 2) {
             return Arrays.asList(new String[]{"add", "remove", "clear", "list", "start", "stop"});
         } else {
             return null;
@@ -88,10 +88,10 @@ public class PGSPartyPermissionsCommand implements SubCommand {
         List<String> chatComponentsToAdd = getComponentStringList();
         Iterator<String> chatComponentStringIterator = chatComponentsToAdd.iterator();
         ChatComponentText baseChatComponent = new ChatComponentText("");
-        while(chatComponentStringIterator.hasNext()) {
+        while (chatComponentStringIterator.hasNext()) {
             String currentString = chatComponentStringIterator.next();
             baseChatComponent.appendSibling(getPartyCommandChatComponent(currentString));
-            if(chatComponentStringIterator.hasNext()) {
+            if (chatComponentStringIterator.hasNext()) {
                 baseChatComponent.appendSibling(newLineText);
             }
         }

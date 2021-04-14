@@ -19,7 +19,7 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if(args.length == 1) {
+        if (args.length == 1) {
             sendHelpMessage(commandSender);
         } else {
             int newValue = attemptToParseInt(commandSender, args[1]);
@@ -53,9 +53,9 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
     }
 
     private String getSuccessMessage(int newValue) {
-        if(newValue < 0) {
+        if (newValue < 0) {
             return EnumChatFormatting.GOLD + "You can't use a value less than 0! Defaulting to 0...";
-        } else if(newValue > 8) {
+        } else if (newValue > 8) {
             return EnumChatFormatting.GOLD + "You can't use a value over 8! Defaulting to 8...";
         } else {
             return EnumChatFormatting.GREEN + "The no-skip threshold has been set to "

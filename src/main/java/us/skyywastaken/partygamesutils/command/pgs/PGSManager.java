@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PGSManager {
+    private final ArrayList<String> SEEK_LIST;
+    private final HashMap<PGSPartyCommandType, Boolean> partyCommandPermissionsHashMap;
     private boolean partyCommandsEnabled;
     private boolean seekingEnabled;
     private int doNotSeekThreshold;
-    private final ArrayList<String> SEEK_LIST;
-    private final HashMap<PGSPartyCommandType, Boolean> partyCommandPermissionsHashMap;
 
     public PGSManager() {
         this.SEEK_LIST = new ArrayList<>();
@@ -47,12 +47,12 @@ public class PGSManager {
         return SEEK_LIST.size();
     }
 
-    public void setPartyCommandsEnabled(boolean newValue) {
-        this.partyCommandsEnabled = newValue;
-    }
-
     public boolean getPartyCommandsEnabled() {
         return partyCommandsEnabled;
+    }
+
+    public void setPartyCommandsEnabled(boolean newValue) {
+        this.partyCommandsEnabled = newValue;
     }
 
     private void initializePartyCommandPermissions() {
@@ -72,12 +72,12 @@ public class PGSManager {
         return partyCommandPermissionsHashMap.get(commandType);
     }
 
-    public void setSeekingEnabled(boolean passedBoolean) {
-        seekingEnabled = passedBoolean;
-    }
-
     public boolean isSeekingEnabled() {
         return seekingEnabled;
+    }
+
+    public void setSeekingEnabled(boolean passedBoolean) {
+        seekingEnabled = passedBoolean;
     }
 
     public int getDoNotSeekThreshold() {
@@ -85,7 +85,7 @@ public class PGSManager {
     }
 
     public void setDoNotSeekThreshold(int newMax) {
-        if(newMax < 0) {
+        if (newMax < 0) {
             doNotSeekThreshold = 0;
         } else doNotSeekThreshold = Math.min(newMax, 8);
     }

@@ -11,17 +11,17 @@ import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
 import java.util.List;
-import java.util.Locale;
 
 public class PGSRemoveCommand implements SubCommand, PartyCommand {
     private final PGSManager PGS_MANAGER;
+
     public PGSRemoveCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if(args.length < 2) {
+        if (args.length < 2) {
             sendTooFewArgsFailureMessage(false, commandSender);
             return;
         }
@@ -37,7 +37,7 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        if(args.length < 2) {
+        if (args.length < 2) {
             sendTooFewArgsFailureMessage(true, null);
         }
         removeGames(getGameListStringsFromArgs(args));
@@ -45,14 +45,12 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
 
-
-
     private void removeGame(String gameToAdd) {
         PGS_MANAGER.removeSoughtGame(gameToAdd);
     }
 
     private void removeGames(String[] passedGameStrings) {
-        for(String currentGameString : passedGameStrings) {
+        for (String currentGameString : passedGameStrings) {
             String finalizedGameString = currentGameString.trim();
             removeGame(finalizedGameString);
         }
@@ -65,10 +63,10 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private void sendTooFewArgsFailureMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             HypixelUtils.sendPartyChatMessage(getTooFewArgsFailureMessage(true));
         } else {
-            if(commandSender != null) {
+            if (commandSender != null) {
                 String failureMessage = getTooFewArgsFailureMessage(false);
                 commandSender.addChatMessage(new ChatComponentText(failureMessage));
             }
@@ -80,7 +78,7 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private void sendClientSuccessMessages(ICommandSender commandSender, String[] addedGames) {
-        for(String currentGame : addedGames) {
+        for (String currentGame : addedGames) {
             sendClientSuccessMessage(commandSender, currentGame);
         }
     }
@@ -96,7 +94,7 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private String getTooFewArgsFailureMessage(boolean isPartyCommand) {
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             return "You need to specify what game(s) you want to remove!";
         } else {
             return EnumChatFormatting.RED

@@ -18,6 +18,7 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
     public PGSClearCommand(PGSManager passedSeekManager) {
         this.PGS_MANAGER = passedSeekManager;
     }
+
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         PGS_MANAGER.clearSeekList();
@@ -37,17 +38,17 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
 
     private void sendSuccessMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
         String successMessage = getSuccessMessage(isPartyCommand);
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             HypixelUtils.sendPartyChatMessage(successMessage);
         } else {
-            if(commandSender != null) {
+            if (commandSender != null) {
                 commandSender.addChatMessage(new ChatComponentText(successMessage));
             }
         }
     }
 
     private String getSuccessMessage(boolean isPartyCommand) {
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             return "Successfully cleared the seeking list!";
         } else {
             return EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW

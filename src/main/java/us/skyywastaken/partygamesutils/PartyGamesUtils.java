@@ -14,9 +14,9 @@ public class PartyGamesUtils {
     private final SeekManager SEEK_MANAGER;
     private final PGSCommand SEEK_COMMAND;
     private final PGSPartyCommandManager PGS_PARTY_COMMAND_MANAGER;
-    private final PGSManager PGS_MANAGER;
+
     public PartyGamesUtils() {
-        this.PGS_MANAGER = new PGSManager();
+        PGSManager PGS_MANAGER = new PGSManager();
         this.PGS_PARTY_COMMAND_MANAGER = new PGSPartyCommandManager(PGS_MANAGER);
         SEEK_MANAGER = new SeekManager(PGS_MANAGER);
         this.SEEK_COMMAND = new PGSCommand(PGS_MANAGER);

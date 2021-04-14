@@ -19,7 +19,7 @@ public class PGSHelpCommand implements SubCommand {
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if(args.length <= 1) {
+        if (args.length <= 1) {
             sendHelpMessage(commandSender, "1");
         } else {
             sendHelpMessage(commandSender, args[1]);
@@ -42,7 +42,7 @@ public class PGSHelpCommand implements SubCommand {
     }
 
     private String getHelpPage(String requestedPage) {
-        if(!HELP_PAGES.containsKey(requestedPage)) {
+        if (!HELP_PAGES.containsKey(requestedPage)) {
             return HELP_PAGES.get("1");
         } else {
             return HELP_PAGES.get(requestedPage);

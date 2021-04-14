@@ -26,9 +26,9 @@ public class PGSPartyCommandManager {
     @SubscribeEvent
     public void onReceiveChatMessage(ClientChatReceivedEvent chatReceivedEvent) {
         String receivedMessage = chatReceivedEvent.message.getUnformattedText();
-        if(receivedMessage.startsWith("Party", 2) && receivedMessage.contains(".pgs")) {
+        if (receivedMessage.startsWith("Party", 2) && receivedMessage.contains(".pgs")) {
             int commandStartIndex = receivedMessage.indexOf(".pgs");
-            String commandBody = receivedMessage.substring(commandStartIndex+5);
+            String commandBody = receivedMessage.substring(commandStartIndex + 5);
             String[] commandArgs = commandBody.split(" ");
             executePartyCommand(commandArgs);
         }
@@ -36,7 +36,7 @@ public class PGSPartyCommandManager {
 
     private void executePartyCommand(String[] passedArgs) {
         PGSPartyCommandType commandType = PGSPartyCommandType.fromString(passedArgs[0]);
-        if(partyCommandHashMap.containsKey(commandType) && PGS_MANAGER.getPartyPermissionEnabled(commandType)) {
+        if (partyCommandHashMap.containsKey(commandType) && PGS_MANAGER.getPartyPermissionEnabled(commandType)) {
             partyCommandHashMap.get(commandType).onPartyCommand(passedArgs);
         }
     }

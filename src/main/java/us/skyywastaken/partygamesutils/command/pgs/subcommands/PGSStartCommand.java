@@ -38,17 +38,17 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
 
     private void sendSuccessMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
         String successMessage = getSuccessMessage(isPartyCommand);
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             HypixelUtils.sendPartyChatMessage(successMessage);
         } else {
-            if(commandSender != null) {
+            if (commandSender != null) {
                 commandSender.addChatMessage(new ChatComponentText(successMessage));
             }
         }
     }
 
     private String getSuccessMessage(boolean isPartyCommand) {
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             return "Seeking has been enabled!";
         } else {
             return EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";

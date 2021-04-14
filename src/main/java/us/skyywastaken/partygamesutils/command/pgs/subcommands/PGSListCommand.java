@@ -18,6 +18,7 @@ public class PGSListCommand implements SubCommand, PartyCommand {
     public PGSListCommand(PGSManager passedSeekManager) {
         this.PGS_MANAGER = passedSeekManager;
     }
+
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         sendGameList(false, commandSender);
@@ -36,19 +37,19 @@ public class PGSListCommand implements SubCommand, PartyCommand {
     private void sendGameList(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
         String gameListString;
         int gameListSize = PGS_MANAGER.getSeekListSize();
-        if(gameListSize == 0) {
+        if (gameListSize == 0) {
             gameListString = getGameListPrefix(isPartyCommand, gameListSize);
         } else {
             gameListString = getGameListPrefix(isPartyCommand, gameListSize) + getGameList(isPartyCommand);
         }
-        if(isPartyCommand) {
-            if(gameListString.length() > 200) {
+        if (isPartyCommand) {
+            if (gameListString.length() > 200) {
                 HypixelUtils.sendPartyChatMessage(getGameListTooLongString());
             } else {
                 HypixelUtils.sendPartyChatMessage(gameListString);
             }
         } else {
-            if(commandSender != null) {
+            if (commandSender != null) {
                 commandSender.addChatMessage(new ChatComponentText(gameListString));
             }
         }
@@ -59,7 +60,7 @@ public class PGSListCommand implements SubCommand, PartyCommand {
         EnumChatFormatting gameColor = EnumChatFormatting.AQUA;
         String delimiter;
         List<String> seekList = PGS_MANAGER.getSeekList();
-        if(isPartyCommand) {
+        if (isPartyCommand) {
             delimiter = ", ";
             return String.join(delimiter, seekList);
         } else {
@@ -69,20 +70,20 @@ public class PGSListCommand implements SubCommand, PartyCommand {
     }
 
     private String getGameListPrefix(boolean isPartyCommand, int gameAmount) {
-        if(gameAmount == 0) {
-            if(isPartyCommand) {
+        if (gameAmount == 0) {
+            if (isPartyCommand) {
                 return "There are no games in the seek list!";
             } else {
                 return EnumChatFormatting.RED + "There are no games in the seek list!";
             }
-        } else if(gameAmount == 1) {
-            if(isPartyCommand) {
+        } else if (gameAmount == 1) {
+            if (isPartyCommand) {
                 return "Current sought game: ";
             } else {
                 return EnumChatFormatting.GREEN + "Current sought game: ";
             }
         } else {
-            if(isPartyCommand) {
+            if (isPartyCommand) {
                 return "Currently sought games: ";
             } else {
                 return EnumChatFormatting.GREEN + "Currently sought games: ";

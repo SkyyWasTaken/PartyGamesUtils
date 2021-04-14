@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SubCommand {
     void onCommand(ICommandSender commandSender, String[] args);
+
     List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos);
 }

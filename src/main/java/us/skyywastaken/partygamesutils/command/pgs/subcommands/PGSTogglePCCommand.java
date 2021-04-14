@@ -16,6 +16,7 @@ public class PGSTogglePCCommand implements SubCommand {
     public PGSTogglePCCommand(PGSManager passedPartyCommandManager) {
         this.PGS_MANAGER = passedPartyCommandManager;
     }
+
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         togglePartyCommands();
