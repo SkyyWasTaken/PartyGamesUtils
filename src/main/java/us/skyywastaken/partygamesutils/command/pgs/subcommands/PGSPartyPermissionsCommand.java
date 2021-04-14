@@ -11,9 +11,10 @@ import net.minecraft.util.IChatComponent;
 import scala.actors.threadpool.Arrays;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
-import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandManager;
 import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandType;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class PGSPartyPermissionsCommand implements SubCommand {
@@ -30,36 +31,75 @@ public class PGSPartyPermissionsCommand implements SubCommand {
         } else if (args.length == 2) {
             PGSPartyCommandType partyCommandType = PGSPartyCommandType.fromString(args[1]);
             if(partyCommandType == null) {
-                String failureMessage = EnumChatFormatting.GOLD + args[0] + EnumChatFormatting.RED
-                        + " isn't a valid permission!";
-                commandSender.addChatMessage(new ChatComponentText(failureMessage));
+                sendInvalidPermissionMessage(commandSender, args[0]);
             } else {
-                boolean currentValue = PGS_MANAGER.getPartyPermissionEnabled(partyCommandType);
-                PGS_MANAGER.updatePartyPermission(partyCommandType, !currentValue);
-                String successMessage = EnumChatFormatting.YELLOW + partyCommandType.toString()
-                        + EnumChatFormatting.AQUA + " has been " + getEnabledDisabledString(!currentValue);
-                commandSender.addChatMessage(new ChatComponentText(successMessage));
+                attemptToTogglePermission(commandSender, partyCommandType);
             }
         }
     }
 
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
-        return Arrays.asList(new String[]{"add", "remove", "clear", "list", "start", "stop"});
+        if(args.length == 2) {
+            return Arrays.asList(new String[]{"add", "remove", "clear", "list", "start", "stop"});
+        } else {
+            return null;
+        }
     }
+
+    private void attemptToTogglePermission(ICommandSender commandSender, PGSPartyCommandType partyCommandType) {
+        boolean currentValue = PGS_MANAGER.getPartyPermissionEnabled(partyCommandType);
+        PGS_MANAGER.updatePartyPermission(partyCommandType, !currentValue);
+        sendSuccessMessage(commandSender, partyCommandType, currentValue);
+    }
+
+    private void sendSuccessMessage(ICommandSender commandSender, PGSPartyCommandType partyCommandType
+            , boolean oldValue) {
+        String successMessage = getSuccessString(partyCommandType, oldValue);
+        commandSender.addChatMessage(new ChatComponentText(successMessage));
+    }
+
+    private String getSuccessString(PGSPartyCommandType partyCommandType, boolean oldValue) {
+        return EnumChatFormatting.YELLOW + partyCommandType.toString()
+                + EnumChatFormatting.AQUA + " has been " + StringUtils.getEnabledDisabledString(!oldValue);
+    }
+
+    private void sendInvalidPermissionMessage(ICommandSender commandSender, String invalidPermissionName) {
+        String invalidPermissionMessage = getInvalidPermissionMessage(invalidPermissionName);
+        commandSender.addChatMessage(new ChatComponentText(invalidPermissionMessage));
+    }
+
+    private String getInvalidPermissionMessage(String invalidPermissionName) {
+        return EnumChatFormatting.GOLD + invalidPermissionName + EnumChatFormatting.RED + " isn't a valid permission!";
+    }
+
     private IChatComponent getPartyPermissionsMessage() {
         String baseMessage = EnumChatFormatting.AQUA + "----------" + EnumChatFormatting.YELLOW + "/pgs PartyPermissions"
                 + EnumChatFormatting.AQUA + "----------\n"
                 + EnumChatFormatting.GOLD + "Click a permission to toggle it on or off.\n";
         ChatComponentText mainChatComponent = new ChatComponentText(baseMessage);
-        ChatComponentText newLineText = new ChatComponentText("\n");
-        mainChatComponent.appendSibling(getPartyCommandChatComponent("Add")).appendSibling(newLineText)
-                .appendSibling(getPartyCommandChatComponent("Remove")).appendSibling(newLineText)
-                .appendSibling(getPartyCommandChatComponent("Clear")).appendSibling(newLineText)
-                .appendSibling(getPartyCommandChatComponent("List")).appendSibling(newLineText)
-                .appendSibling(getPartyCommandChatComponent("Start")).appendSibling(newLineText)
-                .appendSibling(getPartyCommandChatComponent("Stop"));
+        IChatComponent clickableChatComponents = getClickableChatComponents();
+        mainChatComponent.appendSibling(clickableChatComponents);
         return mainChatComponent;
+    }
+
+    private IChatComponent getClickableChatComponents() {
+        ChatComponentText newLineText = new ChatComponentText("\n");
+        List<String> chatComponentsToAdd = getComponentStringList();
+        Iterator<String> chatComponentStringIterator = chatComponentsToAdd.iterator();
+        ChatComponentText baseChatComponent = new ChatComponentText("");
+        while(chatComponentStringIterator.hasNext()) {
+            String currentString = chatComponentStringIterator.next();
+            baseChatComponent.appendSibling(getPartyCommandChatComponent(currentString));
+            if(chatComponentStringIterator.hasNext()) {
+                baseChatComponent.appendSibling(newLineText);
+            }
+        }
+        return baseChatComponent;
+    }
+
+    private List<String> getComponentStringList() {
+        return Arrays.asList(new String[]{"Add", "Remove", "Clear", "List", "Start", "Stop"});
     }
 
     private ChatComponentText getPartyCommandChatComponent(String permissionName) {
@@ -71,7 +111,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
                 .replace("%PermissionName%", permissionName)));
         ClickEvent styleClickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pgs PartyPermissions "
                 + permissionName);
-        String permissionStatus = getEnabledDisabledString(PGS_MANAGER
+        String permissionStatus = StringUtils.getEnabledDisabledString(PGS_MANAGER
                 .getPartyPermissionEnabled(PGSPartyCommandType.fromString(permissionName)));
         ChatComponentText returnChatComponent
                 = new ChatComponentText(clickableText.replace("%PermissionName%", permissionName)
@@ -81,13 +121,5 @@ public class PGSPartyPermissionsCommand implements SubCommand {
 
         returnChatComponent.setChatStyle(returnChatStyle);
         return returnChatComponent;
-    }
-
-    private String getEnabledDisabledString(boolean passedBoolean) {
-        if(passedBoolean) {
-            return EnumChatFormatting.GREEN + "Enabled!";
-        } else {
-            return EnumChatFormatting.DARK_RED + "Disabled!";
-        }
     }
 }

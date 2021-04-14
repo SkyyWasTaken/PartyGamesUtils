@@ -19,14 +19,15 @@ public class PGSManager {
         doNotSkipThreshold = 4;
         this.partyCommandPermissionsHashMap = new HashMap<>();
         this.seekingEnabled = false;
+        initializePartyCommandPermissions();
     }
 
 
-    public void addSeekedGame(String gameToAdd) {
+    public void addSoughtGame(String gameToAdd) {
         SEEK_LIST.add(gameToAdd);
     }
 
-    public void removeSeekedGame(String gameToRemove) {
+    public void removeSoughtGame(String gameToRemove) {
         SEEK_LIST.remove(gameToRemove);
     }
 
@@ -34,7 +35,7 @@ public class PGSManager {
         SEEK_LIST.clear();
     }
 
-    public boolean isGameSeeked(String gameName) {
+    public boolean isGameSought(String gameName) {
         return SEEK_LIST.contains(gameName);
     }
 
@@ -42,15 +43,19 @@ public class PGSManager {
         return SEEK_LIST;
     }
 
+    public int getSeekListSize() {
+        return SEEK_LIST.size();
+    }
+
     public void setPartyCommandsEnabled(boolean newValue) {
         this.partyCommandsEnabled = newValue;
     }
 
-    public boolean arePartyCommandsEnabled() {
+    public boolean getPartyCommandsEnabled() {
         return partyCommandsEnabled;
     }
 
-    private void initializeCommandPermissions() {
+    private void initializePartyCommandPermissions() {
         partyCommandPermissionsHashMap.put(PGSPartyCommandType.CLEAR, true);
         partyCommandPermissionsHashMap.put(PGSPartyCommandType.ADD, true);
         partyCommandPermissionsHashMap.put(PGSPartyCommandType.REMOVE, true);

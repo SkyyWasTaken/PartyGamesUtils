@@ -6,33 +6,24 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PGSHelpCommand implements SubCommand {
+    private final HashMap<String, String> HELP_PAGES;
+
+    public PGSHelpCommand() {
+        this.HELP_PAGES = new HashMap<>();
+        initializeHelpPages();
+    }
+
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        String helpMessage;
-        if(args.length <= 1 || !args[1].equals("2")){
-            helpMessage = getHelpHeader(1)
-                    + EnumChatFormatting.RED + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"
-                    + EnumChatFormatting.GOLD + "It is possible that this feature is considered a disallowed modification "
-                    + "under Hypixel's rules. Use at your own risk!\n"
-                    + EnumChatFormatting.GREEN + "/pgs add <game1>, <game2>, etc.: " + EnumChatFormatting.LIGHT_PURPLE
-                    + "Adds games to the seek list\n"
-                    + EnumChatFormatting.GREEN + "/pgs start: " + EnumChatFormatting.LIGHT_PURPLE + "Starts game seeking\n"
-                    + EnumChatFormatting.GREEN + "/pgs stop: " + EnumChatFormatting.LIGHT_PURPLE + "Stops game seeking\n"
-                    + EnumChatFormatting.GREEN + "/pgs list: " + EnumChatFormatting.LIGHT_PURPLE + "Lists games\n"
-                    + EnumChatFormatting.GREEN + "/pgs togglepartycommands: " + EnumChatFormatting.LIGHT_PURPLE
-                    + "Lets party members add/remove games in party chat. Prefix: \".\"";
+        if(args.length <= 1) {
+            sendHelpMessage(commandSender, "1");
         } else {
-            helpMessage = getHelpHeader(2)
-                    + EnumChatFormatting.GREEN + "/pgs clear: " + EnumChatFormatting.LIGHT_PURPLE + "Clears the seek list\n"
-                    + EnumChatFormatting.GREEN + "/pgs set: " + EnumChatFormatting.LIGHT_PURPLE
-                    + "PGS-related settings management\n"
-                    + EnumChatFormatting.GREEN + "/pgs PartyPermissions: " + EnumChatFormatting.LIGHT_PURPLE
-                    + "Lets you toggle party permissions on or off";
+            sendHelpMessage(commandSender, args[1]);
         }
-        commandSender.addChatMessage(new ChatComponentText(helpMessage));
     }
 
     @Override
@@ -40,8 +31,45 @@ public class PGSHelpCommand implements SubCommand {
         return null;
     }
 
-    private String getHelpHeader(int currentPage) {
+    private String getHelpHeader(int currentPage, int maxPages) {
         return EnumChatFormatting.AQUA + "-------------" + EnumChatFormatting.YELLOW
-                + "/pgs help (" + currentPage + "/2)" + EnumChatFormatting.AQUA + "-------------\n";
+                + "/pgs help (" + currentPage + "/" + maxPages + ")" + EnumChatFormatting.AQUA + "-------------\n";
+    }
+
+    private void sendHelpMessage(ICommandSender commandSender, String pageNumberString) {
+        String helpMessage = getHelpPage(pageNumberString);
+        commandSender.addChatMessage(new ChatComponentText(helpMessage));
+    }
+
+    private String getHelpPage(String requestedPage) {
+        if(!HELP_PAGES.containsKey(requestedPage)) {
+            return HELP_PAGES.get("1");
+        } else {
+            return HELP_PAGES.get(requestedPage);
+        }
+    }
+
+    private void initializeHelpPages() {
+        EnumChatFormatting commandColor = EnumChatFormatting.GREEN;
+        EnumChatFormatting descriptionColor = EnumChatFormatting.GRAY;
+        String helpPageOne = getHelpHeader(1, 2)
+                + EnumChatFormatting.RED + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"
+                + EnumChatFormatting.GOLD + "It is possible that this feature is considered a disallowed modification "
+                + "under Hypixel's rules. Use at your own risk!\n"
+                + commandColor + "/pgs add <game1>, <game2>, etc.: " + descriptionColor
+                + "Adds games to the seek list\n"
+                + commandColor + "/pgs start: " + descriptionColor + "Starts game seeking\n"
+                + commandColor + "/pgs stop: " + descriptionColor + "Stops game seeking\n"
+                + commandColor + "/pgs list: " + descriptionColor + "Lists games\n"
+                + commandColor + "/pgs togglepartycommands: " + descriptionColor
+                + "Lets party members add/remove games in party chat. Prefix: \".\"";
+        this.HELP_PAGES.put("1", helpPageOne);
+
+        String helpPageTwo = getHelpHeader(2, 2)
+                + commandColor + "/pgs clear: " + descriptionColor + "Clears the seek list\n"
+                + commandColor + "/pgs set: " + descriptionColor + "PGS-related settings management\n"
+                + commandColor + "/pgs PartyPermissions: " + descriptionColor
+                + "Lets you toggle party permissions on or off";
+        this.HELP_PAGES.put("2", helpPageTwo);
     }
 }

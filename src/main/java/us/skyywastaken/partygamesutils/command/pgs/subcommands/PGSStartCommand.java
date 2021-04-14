@@ -1,5 +1,6 @@
 package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
+import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -18,12 +19,10 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
         this.PGS_MANAGER = passedPGSManager;
     }
 
-
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         enableSeeking();
-        String messageString = EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
-        commandSender.addChatMessage(new ChatComponentText(messageString));
+        sendSuccessMessage(false, commandSender);
     }
 
     @Override
@@ -34,7 +33,26 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
     @Override
     public void onPartyCommand(String[] args) {
         enableSeeking();
-        HypixelUtils.sendPartyChatMessage("Seeking has been enabled!");
+        sendSuccessMessage(true, null);
+    }
+
+    private void sendSuccessMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
+        String successMessage = getSuccessMessage(isPartyCommand);
+        if(isPartyCommand) {
+            HypixelUtils.sendPartyChatMessage(successMessage);
+        } else {
+            if(commandSender != null) {
+                commandSender.addChatMessage(new ChatComponentText(successMessage));
+            }
+        }
+    }
+
+    private String getSuccessMessage(boolean isPartyCommand) {
+        if(isPartyCommand) {
+            return "Seeking has been enabled!";
+        } else {
+            return EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
+        }
     }
 
     private void enableSeeking() {

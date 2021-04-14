@@ -20,7 +20,7 @@ public class StringUtils {
 
     public static String getEnabledDisabledString(boolean isEnabled) {
         if(isEnabled) {
-            return EnumChatFormatting.GREEN + "Enabled";
+            return EnumChatFormatting.AQUA + "Enabled";
         }else {
             return EnumChatFormatting.DARK_RED + "Disabled";
         }

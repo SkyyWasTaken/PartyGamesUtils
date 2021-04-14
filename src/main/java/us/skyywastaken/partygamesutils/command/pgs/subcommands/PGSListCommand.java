@@ -1,5 +1,6 @@
 package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
+import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -12,28 +13,14 @@ import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import java.util.List;
 
 public class PGSListCommand implements SubCommand, PartyCommand {
-    private final PGSManager SEEK_MANAGER;
+    private final PGSManager PGS_MANAGER;
 
     public PGSListCommand(PGSManager passedSeekManager) {
-        this.SEEK_MANAGER = passedSeekManager;
+        this.PGS_MANAGER = passedSeekManager;
     }
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        String messageString;
-        List<String> seekList = SEEK_MANAGER.getSeekList();
-        int seekListSize = seekList.size();
-        if(seekListSize <= 0) {
-            messageString = EnumChatFormatting.YELLOW + "There are no games in the seek list!";
-        } else {
-            String seekListString = String.join(EnumChatFormatting.YELLOW + ", "
-                    + EnumChatFormatting.AQUA, seekList);
-            if(seekListSize == 1) {
-                messageString = EnumChatFormatting.GREEN + "Current game: " + EnumChatFormatting.AQUA + seekListString;
-            } else {
-                messageString = EnumChatFormatting.GREEN + "Current games: " + EnumChatFormatting.AQUA + seekListString;
-            }
-        }
-        commandSender.addChatMessage(new ChatComponentText(messageString));
+        sendGameList(false, commandSender);
     }
 
     @Override
@@ -43,23 +30,67 @@ public class PGSListCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        String messageString;
-        List<String> seekList = SEEK_MANAGER.getSeekList();
-        int seekListSize = seekList.size();
-        if(seekListSize <= 0) {
-            messageString = "There are no games in the seek list!";
+        sendGameList(true, null);
+    }
+
+    private void sendGameList(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
+        String gameListString;
+        int gameListSize = PGS_MANAGER.getSeekListSize();
+        if(gameListSize == 0) {
+            gameListString = getGameListPrefix(isPartyCommand, gameListSize);
         } else {
-            String seekListString = String.join(", ", seekList);
-            if(seekListSize == 1) {
-                messageString = "Current game: " + seekListString;
+            gameListString = getGameListPrefix(isPartyCommand, gameListSize) + getGameList(isPartyCommand);
+        }
+        if(isPartyCommand) {
+            if(gameListString.length() > 200) {
+                HypixelUtils.sendPartyChatMessage(getGameListTooLongString());
             } else {
-                messageString = "Current games: " + seekListString;
+                HypixelUtils.sendPartyChatMessage(gameListString);
+            }
+        } else {
+            if(commandSender != null) {
+                commandSender.addChatMessage(new ChatComponentText(gameListString));
             }
         }
-        if(messageString.length() > 246) {
-            HypixelUtils.sendPartyChatMessage("The seek list is too large to send!");
+    }
+
+    private String getGameList(boolean isPartyCommand) {
+        EnumChatFormatting commaColor = EnumChatFormatting.YELLOW;
+        EnumChatFormatting gameColor = EnumChatFormatting.AQUA;
+        String delimiter;
+        List<String> seekList = PGS_MANAGER.getSeekList();
+        if(isPartyCommand) {
+            delimiter = ", ";
+            return String.join(delimiter, seekList);
         } else {
-            HypixelUtils.sendPartyChatMessage(messageString);
+            delimiter = commaColor + ", " + gameColor;
+            return gameColor + String.join(delimiter, seekList);
         }
+    }
+
+    private String getGameListPrefix(boolean isPartyCommand, int gameAmount) {
+        if(gameAmount == 0) {
+            if(isPartyCommand) {
+                return "There are no games in the seek list!";
+            } else {
+                return EnumChatFormatting.RED + "There are no games in the seek list!";
+            }
+        } else if(gameAmount == 1) {
+            if(isPartyCommand) {
+                return "Current sought game: ";
+            } else {
+                return EnumChatFormatting.GREEN + "Current sought game: ";
+            }
+        } else {
+            if(isPartyCommand) {
+                return "Currently sought games: ";
+            } else {
+                return EnumChatFormatting.GREEN + "Currently sought games:";
+            }
+        }
+    }
+
+    private String getGameListTooLongString() {
+        return "The game list is too long to send through party chat!";
     }
 }

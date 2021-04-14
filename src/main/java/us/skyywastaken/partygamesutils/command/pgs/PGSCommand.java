@@ -11,6 +11,7 @@ import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSHelpCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
+import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSNoSkipThresholdCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSPartyPermissionsCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
 import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
@@ -85,5 +86,6 @@ public class PGSCommand extends MasterCommand implements ICommand {
         super.registerSubCommand("togglepartycommands", new PGSTogglePCCommand(PGS_MANAGER));
         super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
         super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
+        super.registerSubCommand("DoNotSkipThreshold", new PGSNoSkipThresholdCommand(PGS_MANAGER));
     }
 }

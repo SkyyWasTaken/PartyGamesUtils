@@ -1,6 +1,5 @@
 package us.skyywastaken.partygamesutils.command.pgs.subcommands;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -10,6 +9,7 @@ import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class PGSClearCommand implements SubCommand, PartyCommand {
@@ -21,11 +21,7 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         PGS_MANAGER.clearSeekList();
-        String successMessage = EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
-                + "cleared " + EnumChatFormatting.GREEN + "the seeking list!";
-        if(Minecraft.getMinecraft().ingameGUI != null) {
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(successMessage));
-        }
+        sendSuccessMessage(false, commandSender);
     }
 
     @Override
@@ -36,6 +32,26 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
     @Override
     public void onPartyCommand(String[] args) {
         PGS_MANAGER.clearSeekList();
-        HypixelUtils.sendPartyChatMessage("Successfully cleared the seeking list!");
+        sendSuccessMessage(true, null);
+    }
+
+    private void sendSuccessMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
+        String successMessage = getSuccessMessage(isPartyCommand);
+        if(isPartyCommand) {
+            HypixelUtils.sendPartyChatMessage(successMessage);
+        } else {
+            if(commandSender != null) {
+                commandSender.addChatMessage(new ChatComponentText(successMessage));
+            }
+        }
+    }
+
+    private String getSuccessMessage(boolean isPartyCommand) {
+        if(isPartyCommand) {
+            return "Successfully cleared the seeking list!";
+        } else {
+            return EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
+                    + "cleared " + EnumChatFormatting.GREEN + "the seeking list!";
+        }
     }
 }
