@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.feature.PGS;
+package us.skyywastaken.partygamesutils.feature.PGS.settings;
 
 import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PGSManager {
+public class SeekSettings {
     private final ArrayList<String> SEEK_LIST;
     private final HashMap<PGSPartyCommandType, Boolean> partyCommandPermissionsHashMap;
     private boolean partyCommandsEnabled;
@@ -14,7 +14,7 @@ public class PGSManager {
     private boolean blacklistEnabled;
     private int doNotSeekThreshold;
 
-    public PGSManager() {
+    public SeekSettings() {
         this.SEEK_LIST = new ArrayList<>();
         this.partyCommandsEnabled = false;
         doNotSeekThreshold = 4;

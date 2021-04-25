@@ -3,25 +3,24 @@ package us.skyywastaken.partygamesutils.feature.PGS.command.partycommands;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSAddCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSClearCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSListCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSRemoveCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStartCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStopCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleSeekCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleBlacklistCommand;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
 public class PGSPartyCommandManager {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final HashMap<PGSPartyCommandType, PartyCommand> partyCommandHashMap;
 
-    public PGSPartyCommandManager(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSPartyCommandManager(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
         this.partyCommandHashMap = new HashMap<>();
         registerPartyCommands();
     }

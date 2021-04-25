@@ -6,7 +6,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
@@ -14,9 +14,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PGSClearCommand implements SubCommand, PartyCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
 
-    public PGSClearCommand(PGSManager passedSeekManager) {
+    public PGSClearCommand(SeekSettings passedSeekManager) {
         this.PGS_MANAGER = passedSeekManager;
     }
 
@@ -60,8 +60,8 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
         if (isPartyCommand) {
             return "Successfully cleared the seek list!";
         } else {
-            return EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
-                    + "cleared " + EnumChatFormatting.GREEN + "the seek list!";
+            return StringUtils.BODY_FORMATTING + "Successfully " + EnumChatFormatting.YELLOW
+                    + "cleared " + StringUtils.BODY_FORMATTING + "the seek list!";
         }
     }
 }

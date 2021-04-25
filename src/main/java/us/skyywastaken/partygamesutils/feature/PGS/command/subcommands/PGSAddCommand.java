@@ -7,17 +7,17 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
 public class PGSAddCommand implements SubCommand, PartyCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
 
-    public PGSAddCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSAddCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
     }
 
     @Override
@@ -105,15 +105,15 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
     }
 
     private String getClientSuccessMessage(String addedGame) {
-        return EnumChatFormatting.GREEN + "Added " + EnumChatFormatting.YELLOW + addedGame.trim()
-                + EnumChatFormatting.GREEN + " to the seek list!";
+        return StringUtils.BODY_FORMATTING + "Added " + EnumChatFormatting.YELLOW + addedGame.trim()
+                + StringUtils.BODY_FORMATTING + " to the seek list!";
     }
 
     private String getTooFewArgsFailureMessage(boolean isPartyCommand) {
         if (isPartyCommand) {
             return "You need to specify what game(s) you want to add!";
         } else {
-            return EnumChatFormatting.RED
+            return StringUtils.WARNING_FORMATTING
                     + "You need to specify what game(s) you want to add:\n"
                     + EnumChatFormatting.WHITE + "ex. /pgs add Pig Fishing, Animal Slaughter, Shooting Range";
         }

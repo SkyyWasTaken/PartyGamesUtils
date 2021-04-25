@@ -3,17 +3,18 @@ package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
+import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
 public class PGSTogglePCCommand implements SubCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
+    private final SettingsMenuManager settingsMenuManager;
 
-    public PGSTogglePCCommand(PGSManager passedPartyCommandManager) {
+    public PGSTogglePCCommand(SeekSettings passedPartyCommandManager) {
         this.PGS_MANAGER = passedPartyCommandManager;
     }
 
@@ -34,7 +35,7 @@ public class PGSTogglePCCommand implements SubCommand {
 
     private String getSuccessMessage() {
         boolean partyCommandStatus = PGS_MANAGER.getPartyCommandsEnabled();
-        return EnumChatFormatting.GREEN + "Party commands are now "
+        return StringUtils.BODY_FORMATTING + "Party commands are now "
                 + StringUtils.getEnabledDisabledString(partyCommandStatus);
     }
 

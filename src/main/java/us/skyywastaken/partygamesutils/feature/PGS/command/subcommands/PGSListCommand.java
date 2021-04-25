@@ -4,7 +4,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.ListMenuManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -12,10 +12,10 @@ import us.skyywastaken.partygamesutils.util.StringUtils;
 import java.util.List;
 
 public class PGSListCommand implements SubCommand, PartyCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final ListMenuManager LIST_MENU_MANAGER;
 
-    public PGSListCommand(PGSManager passedSeekManager) {
+    public PGSListCommand(SeekSettings passedSeekManager) {
         this.PGS_MANAGER = passedSeekManager;
         this.LIST_MENU_MANAGER = new ListMenuManager(this.PGS_MANAGER);
     }

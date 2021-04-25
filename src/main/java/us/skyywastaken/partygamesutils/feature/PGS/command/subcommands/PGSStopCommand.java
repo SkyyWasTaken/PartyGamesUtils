@@ -6,17 +6,17 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
 public class PGSStopCommand implements SubCommand, PartyCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
 
-    public PGSStopCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSStopCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PGSStopCommand implements SubCommand, PartyCommand {
         if (isPartyCommand) {
             return "Seeking has been disabled!";
         } else {
-            return EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.DARK_RED + "DISABLED!";
+            return StringUtils.BODY_FORMATTING + "Seeking has been " + EnumChatFormatting.DARK_RED + "DISABLED!";
         }
     }
 

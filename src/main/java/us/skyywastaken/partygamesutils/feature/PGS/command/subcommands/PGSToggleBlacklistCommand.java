@@ -3,10 +3,9 @@ package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -15,11 +14,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
-    public PGSToggleBlacklistCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSToggleBlacklistCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
         this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(this.PGS_MANAGER);
     }
 
@@ -67,7 +66,7 @@ public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
         if (isPartyCommand) {
             return "The blacklist has been " + StringUtils.getColorlessEnabledDisabledString(isBlacklistEnabled);
         } else {
-            return EnumChatFormatting.GREEN + "The blacklist has been "
+            return StringUtils.BODY_FORMATTING + "The blacklist has been "
                     + StringUtils.getEnabledDisabledString(isBlacklistEnabled);
         }
     }

@@ -7,7 +7,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.ListMenuManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -15,11 +15,11 @@ import us.skyywastaken.partygamesutils.util.StringUtils;
 import java.util.List;
 
 public class PGSRemoveCommand implements SubCommand, PartyCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final ListMenuManager LIST_MENU_MANAGER;
 
-    public PGSRemoveCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSRemoveCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
         this.LIST_MENU_MANAGER = new ListMenuManager(this.PGS_MANAGER);
     }
 
@@ -109,15 +109,15 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private String getClientSuccessMessage(String addedGame) {
-        return EnumChatFormatting.GREEN + "Removed " + EnumChatFormatting.YELLOW + addedGame.trim()
-                + EnumChatFormatting.GREEN + " from the seek list!";
+        return StringUtils.BODY_FORMATTING + "Removed " + EnumChatFormatting.YELLOW + addedGame.trim()
+                + StringUtils.BODY_FORMATTING + " from the seek list!";
     }
 
     private String getTooFewArgsFailureMessage(boolean isPartyCommand) {
         if (isPartyCommand) {
             return "You need to specify what game(s) you want to remove!";
         } else {
-            return EnumChatFormatting.RED
+            return StringUtils.WARNING_FORMATTING
                     + "You need to specify what game(s) you want to remove:\n"
                     + EnumChatFormatting.WHITE + "ex. /pgs remove Lawn Moower, RPG-16, Lab Escape";
         }

@@ -5,18 +5,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
 public class PGSDoNotSeekThresholdCommand implements SubCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
-    public PGSDoNotSeekThresholdCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSDoNotSeekThresholdCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
         this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(PGS_MANAGER);
     }
 
@@ -66,7 +66,7 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
     }
 
     private String getNumberFormatExceptionMessage() {
-        return EnumChatFormatting.RED + "Please enter a valid number!";
+        return StringUtils.WARNING_FORMATTING + "Please enter a valid number!";
     }
 
     private String getSuccessMessage(int newValue) {
@@ -75,10 +75,10 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
         } else if (newValue > 8) {
             return EnumChatFormatting.GOLD + "You can't use a value over 8! Defaulting to 8...";
         } else if (newValue == 0) {
-            return EnumChatFormatting.GREEN + "The no-seek threshold has been " + EnumChatFormatting.YELLOW + "disabled!";
+            return StringUtils.BODY_FORMATTING + "The no-seek threshold has been " + EnumChatFormatting.YELLOW + "disabled!";
         } else {
-            return EnumChatFormatting.GREEN + "The no-seek threshold has been set to " + EnumChatFormatting.YELLOW
-                    + "Game " + newValue + EnumChatFormatting.GREEN + "!";
+            return StringUtils.BODY_FORMATTING + "The no-seek threshold has been set to " + EnumChatFormatting.YELLOW
+                    + "Game " + newValue + StringUtils.BODY_FORMATTING + "!";
         }
     }
 
@@ -93,7 +93,7 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
                 + EnumChatFormatting.GOLD + "To modify the no-seek threshold, type /pgs NoSkipThreshold newNumber\n"
                 + EnumChatFormatting.GRAY + "Examples: 0 = always fine to pull me out, 4 = don't pull me out on game 4 and over, " +
                 "5 = don't pull me out on game 5 and over, etc.\n"
-                + EnumChatFormatting.GREEN + "Current no-seek threshold: " + EnumChatFormatting.YELLOW + "Game "
+                + StringUtils.BODY_FORMATTING + "Current no-seek threshold: " + EnumChatFormatting.YELLOW + "Game "
                 + PGS_MANAGER.getDoNotSeekThreshold();
     }
 }

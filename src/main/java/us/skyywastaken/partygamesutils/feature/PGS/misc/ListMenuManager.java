@@ -3,18 +3,19 @@ package us.skyywastaken.partygamesutils.feature.PGS.misc;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.ChatUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class ListMenuManager {
     private static final int MESSAGE_ID = 32432;
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
 
-    public ListMenuManager(PGSManager pgsManager) {
-        this.PGS_MANAGER = pgsManager;
+    public ListMenuManager(SeekSettings seekSettings) {
+        this.PGS_MANAGER = seekSettings;
     }
 
     public void displayList() {
@@ -43,11 +44,11 @@ public class ListMenuManager {
 
     private String getGameListPrefix(int gameAmount) {
         if (gameAmount == 0) {
-            return EnumChatFormatting.RED + "There are no games in the seek list!";
+            return StringUtils.WARNING_FORMATTING + "There are no games in the seek list!";
         } else if (gameAmount == 1) {
-            return EnumChatFormatting.GREEN + "Current sought game: ";
+            return StringUtils.BODY_FORMATTING + "Current sought game: ";
         } else {
-            return EnumChatFormatting.GREEN + "Currently sought games: ";
+            return StringUtils.BODY_FORMATTING + "Currently sought games: ";
         }
     }
 }

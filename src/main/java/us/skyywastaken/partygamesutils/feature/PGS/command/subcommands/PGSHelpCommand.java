@@ -59,10 +59,10 @@ public class PGSHelpCommand implements SubCommand {
     }
 
     private void initializeHelpPages() {
-        EnumChatFormatting commandColor = EnumChatFormatting.GREEN;
+        EnumChatFormatting commandColor = StringUtils.BODY_FORMATTING;
         EnumChatFormatting descriptionColor = EnumChatFormatting.GRAY;
         String helpPageOne = getHelpHeader(1)
-                + EnumChatFormatting.RED + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"
+                + StringUtils.WARNING_FORMATTING + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"
                 + EnumChatFormatting.GOLD + "It is possible that this feature is considered a disallowed modification "
                 + "under Hypixel's rules. Use at your own risk!\n"
                 + commandColor + "/pgs help <page>: " + descriptionColor + "Displays this menu\n"

@@ -5,7 +5,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import us.skyywastaken.partygamesutils.feature.PGS.command.PGSCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandManager;
 import us.skyywastaken.partygamesutils.feature.PGS.SeekManager;
 
@@ -16,7 +16,7 @@ public class PartyGamesUtils {
     private final PGSPartyCommandManager PGS_PARTY_COMMAND_MANAGER;
 
     public PartyGamesUtils() {
-        PGSManager PGS_MANAGER = new PGSManager();
+        SeekSettings PGS_MANAGER = new SeekSettings();
         this.PGS_PARTY_COMMAND_MANAGER = new PGSPartyCommandManager(PGS_MANAGER);
         SEEK_MANAGER = new SeekManager(PGS_MANAGER);
         this.SEEK_COMMAND = new PGSCommand(PGS_MANAGER);

@@ -4,18 +4,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.ScoreboardUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 public class SeekManager {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private boolean playerWasNotified;
 
-    public SeekManager(PGSManager pgsManager) {
-        this.PGS_MANAGER = pgsManager;
+    public SeekManager(SeekSettings seekSettings) {
+        this.PGS_MANAGER = seekSettings;
         this.playerWasNotified = false;
     }
 
@@ -48,7 +49,7 @@ public class SeekManager {
         if (PGS_MANAGER.getPartyCommandsEnabled()) {
             HypixelUtils.sendPartyChatMessage("I've found a game you're looking for!");
         } else {
-            clientPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "A good game has been found!"));
+            clientPlayer.addChatMessage(new ChatComponentText(StringUtils.BODY_FORMATTING + "A good game has been found!"));
         }
         BlockPos playerPos = clientPlayer.getPosition();
         Minecraft.getMinecraft().theWorld.playSound(playerPos.getX(), playerPos.getY(), playerPos.getZ(),

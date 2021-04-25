@@ -19,7 +19,7 @@ import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStopCo
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleSeekCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleBlacklistCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSTogglePCCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
@@ -27,11 +27,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class PGSCommand extends MasterCommand implements ICommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
-    public PGSCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
         this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(this.PGS_MANAGER);
         registerSubCommands();
     }

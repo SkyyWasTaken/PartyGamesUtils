@@ -6,7 +6,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
 import us.skyywastaken.partygamesutils.util.ChatUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -16,11 +16,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PGSPartyPermissionsCommand implements SubCommand {
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
     private final static int MESSAGE_ID = 3462;
 
-    public PGSPartyPermissionsCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSPartyPermissionsCommand(SeekSettings passedSeekSettings) {
+        this.PGS_MANAGER = passedSeekSettings;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     }
 
     private String getInvalidPermissionMessage(String invalidPermissionName) {
-        return EnumChatFormatting.GOLD + invalidPermissionName + EnumChatFormatting.RED + " isn't a valid permission!";
+        return EnumChatFormatting.GOLD + invalidPermissionName + StringUtils.WARNING_FORMATTING + " isn't a valid permission!";
     }
 
     private IChatComponent getPartyPermissionsMessage() {

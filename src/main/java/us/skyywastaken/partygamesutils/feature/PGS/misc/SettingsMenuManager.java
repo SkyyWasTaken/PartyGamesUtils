@@ -6,16 +6,16 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.ChatUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 public class SettingsMenuManager {
     private static final int MESSAGE_ID = 3621;
-    private final PGSManager PGS_MANAGER;
+    private final SeekSettings PGS_MANAGER;
 
-    public SettingsMenuManager(PGSManager pgsManager) {
-        this.PGS_MANAGER = pgsManager;
+    public SettingsMenuManager(SeekSettings seekSettings) {
+        this.PGS_MANAGER = seekSettings;
     }
 
     public void displaySettingsMenu() {
@@ -56,20 +56,20 @@ public class SettingsMenuManager {
     private IChatComponent getSettingsLineTwo() {
         // Seeking: (status)! | Blacklist: (status)!
         IChatComponent returnComponent = new ChatComponentText("");
-        String seekHelpText = EnumChatFormatting.GREEN + "Seeking: ";
+        String seekHelpText = StringUtils.BODY_FORMATTING + "Seeking: ";
         String seekHelpCommand = "/pgs help ToggleSeek";
         String dNSTTooltip = "Click me to view information about toggling seeking!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(seekHelpText, seekHelpCommand, dNSTTooltip));
 
         String seekStatusString = StringUtils.getEnabledDisabledString(PGS_MANAGER.isSeekingEnabled()).toUpperCase()
-                + EnumChatFormatting.GREEN + "!";
+                + StringUtils.BODY_FORMATTING + "!";
         String seekCommand = "/pgs ToggleSeek --displaysettings";
         String seekTooltip = "Click me to toggle seeking!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(seekStatusString, seekCommand, seekTooltip));
         returnComponent.appendSibling(new ChatComponentText(" | ").setChatStyle(new ChatStyle()));
 
 
-        String blacklistText = EnumChatFormatting.GREEN + "Blacklist: ";
+        String blacklistText = StringUtils.BODY_FORMATTING + "Blacklist: ";
         String blacklistHelpCommand = "/pgs help ToggleBlacklist";
         String blacklistHelpTooltip = "Click me to view information about toggling the blacklist!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(blacklistText,
@@ -77,7 +77,7 @@ public class SettingsMenuManager {
 
 
         String blacklistString = StringUtils.getEnabledDisabledString(PGS_MANAGER.isBlacklistEnabled()).toUpperCase()
-                + EnumChatFormatting.GREEN + "!";
+                + StringUtils.BODY_FORMATTING + "!";
         String blacklistTooltip = "Click me to toggle the blacklist!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(blacklistString,
                 "/pgs ToggleBlacklist --displaysettings", blacklistTooltip));
@@ -87,7 +87,7 @@ public class SettingsMenuManager {
     private IChatComponent getSettingsLineThree() {
         // Do Not Seek Threshold: 0 1 2 3 4 5 6 7 8
         IChatComponent returnComponent = new ChatComponentText("");
-        String dNSTText = EnumChatFormatting.GREEN + "Do Not Seek Threshold: ";
+        String dNSTText = StringUtils.BODY_FORMATTING + "Do Not Seek Threshold: ";
         String dNSTCommand = "/pgs help DoNotSeekThreshold";
         String dNSTTooltip = "Click me to view information about the seek threshold!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(dNSTText, dNSTCommand, dNSTTooltip));
@@ -117,7 +117,7 @@ public class SettingsMenuManager {
     private IChatComponent getSettingsLineFour() {
         // Seek list: x games, click to view!
         IChatComponent returnComponent = new ChatComponentText("");
-        String listHelpText = EnumChatFormatting.GREEN + "Seek list: ";
+        String listHelpText = StringUtils.BODY_FORMATTING + "Seek list: ";
         String listHelpCommand = "/pgs help list";
         String listHelpTooltip = "Click me to view information about listing sought games!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(listHelpText, listHelpCommand, listHelpTooltip));
@@ -140,13 +140,32 @@ public class SettingsMenuManager {
     }
 
     private IChatComponent getSettingsLineFive() {
+        //Party commands: (STATUS)! | Permissions:
         IChatComponent returnComponent = new ChatComponentText("");
-        String pCHelpText = EnumChatFormatting.GREEN + "Seek list: ";
-        String pCHelpCommand = "/pgs help list";
-        String pCHelpTooltip = "Click me to view information about listing sought games!";
+        String pCHelpText = StringUtils.BODY_FORMATTING + "Party commands: ";
+        String pCHelpCommand = "/pgs help TogglePartyCommands";
+        String pCHelpTooltip = "Click me to view information about toggling party commands!";
         returnComponent.appendSibling(ChatUtils.getCommandChatComponent(pCHelpText, pCHelpCommand, pCHelpTooltip));
 
         boolean partyCommandStatus = PGS_MANAGER.getPartyCommandsEnabled();
-        String
+        String partyCommandStatusText = StringUtils.BODY_FORMATTING
+                + StringUtils.getEnabledDisabledString(partyCommandStatus).toUpperCase()
+                + StringUtils.BODY_FORMATTING + "!";
+        String partyCommandStatusCommand = "/pgs TogglePartyCommands --displaysettings";
+        String partyCommandTooltip = "Click me to toggle party commands!";
+        returnComponent.appendSibling(ChatUtils
+                .getCommandChatComponent(partyCommandStatusText, partyCommandStatusCommand, partyCommandTooltip));
+
+        String dividerString = StringUtils.BODY_FORMATTING + " | ";
+        returnComponent.appendSibling(new ChatComponentText(dividerString));
+
+        String partyPermissionHelpText = StringUtils.BODY_FORMATTING + "Permissions:";
+        String partyPermissionHelpCommand = "/pgs help PartyPermissions";
+        String partyPermissionTooltip = "Click me to view party permission help!";
+        returnComponent.appendSibling(ChatUtils
+                .getCommandChatComponent(partyPermissionHelpText, partyPermissionHelpCommand, partyPermissionTooltip));
+        return returnComponent;
     }
+
+
 }
