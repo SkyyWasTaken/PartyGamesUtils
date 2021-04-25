@@ -1,29 +1,35 @@
-package us.skyywastaken.partygamesutils.command.pgs;
+package us.skyywastaken.partygamesutils.feature.PGS.command;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.command.MasterCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSDoNotSeekThresholdCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSHelpCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSPartyPermissionsCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSToggleBlacklistCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSTogglePCCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSAddCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSClearCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSDoNotSeekThresholdCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSHelpCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSListCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSPartyPermissionsCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSRemoveCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSSettingsCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStartCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStopCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleSeekCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleBlacklistCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSTogglePCCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
 
 import java.util.Collections;
 import java.util.List;
 
 public class PGSCommand extends MasterCommand implements ICommand {
     private final PGSManager PGS_MANAGER;
+    private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
     public PGSCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
+        this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(this.PGS_MANAGER);
         registerSubCommands();
     }
 
@@ -79,9 +85,11 @@ public class PGSCommand extends MasterCommand implements ICommand {
         super.registerSubCommand("remove", new PGSRemoveCommand(PGS_MANAGER));
         super.registerSubCommand("list", new PGSListCommand(PGS_MANAGER));
         super.registerSubCommand("TogglePartyCommands", new PGSTogglePCCommand(PGS_MANAGER));
+        super.registerSubCommand("ToggleSeek", new PGSToggleSeekCommand(PGS_MANAGER));
         super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
         super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
         super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(PGS_MANAGER));
         super.registerSubCommand("ToggleBlacklist", new PGSToggleBlacklistCommand(PGS_MANAGER));
+        super.registerSubCommand("settings", new PGSSettingsCommand(SETTINGS_MENU_MANAGER));
     }
 }

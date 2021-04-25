@@ -1,27 +1,27 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
+import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class PGSClearCommand implements SubCommand, PartyCommand {
+public class PGSStartCommand implements SubCommand, PartyCommand {
     private final PGSManager PGS_MANAGER;
 
-    public PGSClearCommand(PGSManager passedSeekManager) {
-        this.PGS_MANAGER = passedSeekManager;
+    public PGSStartCommand(PGSManager passedPGSManager) {
+        this.PGS_MANAGER = passedPGSManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        PGS_MANAGER.clearSeekList();
+        enableSeeking();
         sendSuccessMessage(false, commandSender);
     }
 
@@ -32,7 +32,8 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        PGS_MANAGER.clearSeekList();
+        System.out.println("got the command");
+        enableSeeking();
         sendSuccessMessage(true, null);
     }
 
@@ -49,10 +50,13 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
 
     private String getSuccessMessage(boolean isPartyCommand) {
         if (isPartyCommand) {
-            return "Successfully cleared the seek list!";
+            return "Seeking has been enabled!";
         } else {
-            return EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
-                    + "cleared " + EnumChatFormatting.GREEN + "the seek list!";
+            return EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
         }
+    }
+
+    private void enableSeeking() {
+        PGS_MANAGER.setSeekingEnabled(true);
     }
 }

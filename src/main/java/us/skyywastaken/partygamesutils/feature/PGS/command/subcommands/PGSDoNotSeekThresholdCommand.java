@@ -1,11 +1,11 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if (args.length == 1) {
+        if (args.length == 0) {
             sendHelpMessage(commandSender);
         } else {
-            int newValue = attemptToParseInt(commandSender, args[1]);
+            int newValue = attemptToParseInt(commandSender, args[0]);
             PGS_MANAGER.setDoNotSeekThreshold(newValue);
             String successMessage = getSuccessMessage(newValue);
             commandSender.addChatMessage(new ChatComponentText(successMessage));

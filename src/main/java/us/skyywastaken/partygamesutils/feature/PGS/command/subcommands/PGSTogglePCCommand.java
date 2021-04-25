@@ -1,11 +1,11 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;

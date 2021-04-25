@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -19,10 +19,10 @@ public class PGSHelpCommand implements SubCommand {
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if (args.length <= 1) {
+        if (args.length == 0) {
             sendHelpMessage(commandSender, "1");
         } else {
-            sendHelpMessage(commandSender, args[1]);
+            sendHelpMessage(commandSender, args[0]);
         }
     }
 
@@ -56,6 +56,7 @@ public class PGSHelpCommand implements SubCommand {
                 + EnumChatFormatting.RED + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"
                 + EnumChatFormatting.GOLD + "It is possible that this feature is considered a disallowed modification "
                 + "under Hypixel's rules. Use at your own risk!\n"
+                + "a1a2a3a4a5a6a7a8a9b1b2b3b4b5b6b7b8b9c1c2c3c4c5c6c7c8c9d1d2d3d4d5d6d7d8d9e1e2e3e4e5e6e7e8e9f1f2f3f4f5f6f7f8f9"
                 + commandColor + "/pgs help <page>: " + descriptionColor + "Displays this menu\n"
                 + commandColor + "/pgs add <game1>, <game2>, etc.: " + descriptionColor
                 + "Adds games to the seek list\n"

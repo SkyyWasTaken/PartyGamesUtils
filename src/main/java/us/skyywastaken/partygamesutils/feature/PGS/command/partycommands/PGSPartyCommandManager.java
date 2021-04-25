@@ -1,17 +1,19 @@
-package us.skyywastaken.partygamesutils.command.pgs.PartyCommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.partycommands;
 
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSAddCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSClearCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSListCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSRemoveCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStartCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSStopCommand;
-import us.skyywastaken.partygamesutils.command.pgs.subcommands.PGSToggleBlacklistCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSAddCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSClearCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSListCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSRemoveCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStartCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStopCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleSeekCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleBlacklistCommand;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class PGSPartyCommandManager {
@@ -41,7 +43,8 @@ public class PGSPartyCommandManager {
     private void executePartyCommand(String[] passedArgs) {
         PGSPartyCommandType commandType = PGSPartyCommandType.fromString(passedArgs[0]);
         if (partyCommandHashMap.containsKey(commandType) && PGS_MANAGER.getPartyPermissionEnabled(commandType)) {
-            partyCommandHashMap.get(commandType).onPartyCommand(passedArgs);
+            String[] argsToPass = Arrays.copyOfRange(passedArgs, 1, passedArgs.length);
+            partyCommandHashMap.get(commandType).onPartyCommand(argsToPass);
         }
     }
 

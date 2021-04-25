@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.PartyCommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.partycommands;
 
 public enum PGSPartyCommandType {
     ADD, REMOVE, CLEAR, LIST, START, STOP, TOGGLEBLACKLIST;

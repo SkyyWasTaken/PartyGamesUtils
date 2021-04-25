@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -6,23 +6,22 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
-import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
+public class PGSClearCommand implements SubCommand, PartyCommand {
     private final PGSManager PGS_MANAGER;
 
-    public PGSToggleBlacklistCommand(PGSManager passedPGSManager) {
-        this.PGS_MANAGER = passedPGSManager;
+    public PGSClearCommand(PGSManager passedSeekManager) {
+        this.PGS_MANAGER = passedSeekManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        toggleBlacklist();
+        PGS_MANAGER.clearSeekList();
         sendSuccessMessage(false, commandSender);
     }
 
@@ -33,7 +32,7 @@ public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        toggleBlacklist();
+        PGS_MANAGER.clearSeekList();
         sendSuccessMessage(true, null);
     }
 
@@ -49,16 +48,11 @@ public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
     }
 
     private String getSuccessMessage(boolean isPartyCommand) {
-        boolean isBlacklistEnabled = PGS_MANAGER.isBlacklistEnabled();
         if (isPartyCommand) {
-            return "The blacklist has been " + StringUtils.getColorlessEnabledDisabledString(isBlacklistEnabled);
+            return "Successfully cleared the seek list!";
         } else {
-            return EnumChatFormatting.GREEN + "The blacklist has been "
-                    + StringUtils.getEnabledDisabledString(isBlacklistEnabled);
+            return EnumChatFormatting.GREEN + "Successfully " + EnumChatFormatting.YELLOW
+                    + "cleared " + EnumChatFormatting.GREEN + "the seek list!";
         }
-    }
-
-    private void toggleBlacklist() {
-        PGS_MANAGER.setBlacklistEnabled(!PGS_MANAGER.isBlacklistEnabled());
     }
 }

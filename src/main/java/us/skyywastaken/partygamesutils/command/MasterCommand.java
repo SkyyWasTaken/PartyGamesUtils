@@ -5,6 +5,7 @@ import net.minecraft.util.BlockPos;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,13 @@ public abstract class MasterCommand {
     public void executeCommand(String subCommand, ICommandSender commandSender, String[] passedArgs) {
         SubCommand subCommandToExecute = SUB_COMMAND_HASH_MAP.get(subCommand);
         if (subCommandToExecute == null) return;
-        subCommandToExecute.onCommand(commandSender, passedArgs);
+        String[] argsToPass;
+        if(passedArgs.length > 1) {
+            argsToPass = Arrays.copyOfRange(passedArgs, 1, passedArgs.length);
+        } else {
+            argsToPass = new String[0];
+        }
+        subCommandToExecute.onCommand(commandSender, argsToPass);
     }
 
     public boolean subCommandExists(String subCommandName) {
@@ -46,5 +53,15 @@ public abstract class MasterCommand {
         if (returnList == null) return null;
         Collections.sort(returnList);
         return StringUtils.getPartialMatches(currentArgs[currentArgs.length - 1], returnList);
+    }
+
+    public boolean userIsRequestingSubCommandHelp(String[] args) {
+        return args.length >= 2 && args[0].equals("help") && subCommandExists(args[1]);
+    }
+
+    public String getSubCommandHelpMessage(String[] args) {
+        if(args.length >= 2 && subCommandExists(args[1])) {
+            return
+        }
     }
 }

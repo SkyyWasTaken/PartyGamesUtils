@@ -7,8 +7,15 @@ import net.minecraft.scoreboard.Scoreboard;
 public class ScoreboardUtils {
     public static String getLineFromScoreboard(int lineNumber) {
         Scoreboard scoreboard = getScoreboard();
-        if (scoreboard == null) return "garbage string";
-        ScorePlayerTeam requestedTeam = getScoreboard().getTeam("team_" + lineNumber);
+        if(scoreboard == null) {
+            return "";
+        }
+        ScorePlayerTeam requestedTeam;
+        try {
+            requestedTeam = getScoreboard().getTeam("team_" + lineNumber);
+        } catch (NullPointerException e) {
+            return "";
+        }
         if (requestedTeam == null) return "garbage string";
         String colorPrefix = requestedTeam.getColorPrefix();
         String colorSuffix = requestedTeam.getColorSuffix();
@@ -18,7 +25,12 @@ public class ScoreboardUtils {
     public static String getNoPrefixGameName() {
         Scoreboard scoreboard = getScoreboard();
         if (scoreboard == null) return "";
-        ScorePlayerTeam requestedTeam = getScoreboard().getTeam("team_12");
+        ScorePlayerTeam requestedTeam;
+        try {
+            requestedTeam = getScoreboard().getTeam("team_12");
+        } catch(NullPointerException e) {
+            return "";
+        }
         if (requestedTeam == null) return "";
         String basePrefixString = requestedTeam.getColorPrefix();
         String prefixString;

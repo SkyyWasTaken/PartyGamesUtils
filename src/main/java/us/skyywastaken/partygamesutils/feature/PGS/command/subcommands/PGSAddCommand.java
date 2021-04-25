@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
@@ -7,26 +7,26 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 
 import java.util.List;
 
-public class PGSRemoveCommand implements SubCommand, PartyCommand {
+public class PGSAddCommand implements SubCommand, PartyCommand {
     private final PGSManager PGS_MANAGER;
 
-    public PGSRemoveCommand(PGSManager passedPGSManager) {
+    public PGSAddCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if (args.length < 2) {
+        if (args.length == 0) {
             sendTooFewArgsFailureMessage(false, commandSender);
             return;
         }
         String[] gameList = getGameListStringsFromArgs(args);
-        removeGames(gameList);
+        addGames(gameList);
         sendClientSuccessMessages(commandSender, gameList);
     }
 
@@ -36,32 +36,38 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     @Override
+    public String getHelpInformation() {
+        return "This command allows you to add games to the seek list. To use it, type /pgs add <game1>, <game2>, <game3>";
+    }
+
+    @Override
     public void onPartyCommand(String[] args) {
-        if (args.length < 2) {
+        if (args.length == 0) {
             sendTooFewArgsFailureMessage(true, null);
             return;
         }
-        String[] gameList = getGameListStringsFromArgs(args);
-        getGameListStringsFromArgs(args);
-        sendPartySuccessMessage(gameList.length);
+        String[] gameListString = getGameListStringsFromArgs(args);
+        addGames(gameListString);
+        sendPartySuccessMessage(gameListString.length);
     }
 
 
-    private void removeGame(String gameToAdd) {
-        PGS_MANAGER.removeSoughtGame(gameToAdd);
+    private void addGame(String gameToAdd) {
+        if (!PGS_MANAGER.isGameSought(gameToAdd)) {
+            PGS_MANAGER.addSoughtGame(gameToAdd);
+        }
     }
 
-    private void removeGames(String[] passedGameStrings) {
+    private void addGames(String[] passedGameStrings) {
         for (String currentGameString : passedGameStrings) {
             String finalizedGameString = currentGameString.trim();
-            removeGame(finalizedGameString);
+            addGame(finalizedGameString);
         }
     }
 
     private String[] getGameListStringsFromArgs(String[] rawArgsArray) {
         String rawArgsString = String.join(" ", rawArgsArray);
-        String gameListString = rawArgsString.toLowerCase().replace("remove", "");
-        return gameListString.split(",");
+        return rawArgsString.split(",");
     }
 
     private void sendTooFewArgsFailureMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
@@ -77,9 +83,9 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
 
     private void sendPartySuccessMessage(int gamesAdded) {
         if (gamesAdded == 1) {
-            HypixelUtils.sendPartyChatMessage("Game removed successfully!");
+            HypixelUtils.sendPartyChatMessage("Game added successfully!");
         } else {
-            HypixelUtils.sendPartyChatMessage("Game(s) removed successfully!");
+            HypixelUtils.sendPartyChatMessage("Game(s) added successfully!");
         }
     }
 
@@ -95,17 +101,17 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private String getClientSuccessMessage(String addedGame) {
-        return EnumChatFormatting.GREEN + "Removed " + EnumChatFormatting.YELLOW + addedGame.trim()
-                + EnumChatFormatting.GREEN + " from the seek list!";
+        return EnumChatFormatting.GREEN + "Added " + EnumChatFormatting.YELLOW + addedGame.trim()
+                + EnumChatFormatting.GREEN + " to the seek list!";
     }
 
     private String getTooFewArgsFailureMessage(boolean isPartyCommand) {
         if (isPartyCommand) {
-            return "You need to specify what game(s) you want to remove!";
+            return "You need to specify what game(s) you want to add!";
         } else {
             return EnumChatFormatting.RED
-                    + "You need to specify what game(s) you want to remove:\n"
-                    + EnumChatFormatting.WHITE + "ex. /pgs remove Lawn Moower, RPG-16, Lab Escape";
+                    + "You need to specify what game(s) you want to add:\n"
+                    + EnumChatFormatting.WHITE + "ex. /pgs add Pig Fishing, Animal Slaughter, Shooting Range";
         }
     }
 }

@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.misc;
+package us.skyywastaken.partygamesutils.feature.PGS;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -7,7 +7,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.ScoreboardUtils;
 

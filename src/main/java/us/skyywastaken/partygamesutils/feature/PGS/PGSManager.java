@@ -1,6 +1,6 @@
-package us.skyywastaken.partygamesutils.command.pgs;
+package us.skyywastaken.partygamesutils.feature.PGS;
 
-import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandType;
+import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
 
 import java.util.ArrayList;
 import java.util.HashMap;

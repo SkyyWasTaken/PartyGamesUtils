@@ -1,27 +1,28 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
-import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class PGSStopCommand implements SubCommand, PartyCommand {
+public class PGSToggleBlacklistCommand implements SubCommand, PartyCommand {
     private final PGSManager PGS_MANAGER;
 
-    public PGSStopCommand(PGSManager passedPGSManager) {
+    public PGSToggleBlacklistCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        disableSeeking();
+        toggleBlacklist();
         sendSuccessMessage(false, commandSender);
     }
 
@@ -32,8 +33,7 @@ public class PGSStopCommand implements SubCommand, PartyCommand {
 
     @Override
     public void onPartyCommand(String[] args) {
-        disableSeeking();
-
+        toggleBlacklist();
         sendSuccessMessage(true, null);
     }
 
@@ -49,14 +49,16 @@ public class PGSStopCommand implements SubCommand, PartyCommand {
     }
 
     private String getSuccessMessage(boolean isPartyCommand) {
+        boolean isBlacklistEnabled = PGS_MANAGER.isBlacklistEnabled();
         if (isPartyCommand) {
-            return "Seeking has been disabled!";
+            return "The blacklist has been " + StringUtils.getColorlessEnabledDisabledString(isBlacklistEnabled);
         } else {
-            return EnumChatFormatting.GREEN + "Seeking has been " + EnumChatFormatting.DARK_RED + "DISABLED!";
+            return EnumChatFormatting.GREEN + "The blacklist has been "
+                    + StringUtils.getEnabledDisabledString(isBlacklistEnabled);
         }
     }
 
-    private void disableSeeking() {
-        PGS_MANAGER.setSeekingEnabled(false);
+    private void toggleBlacklist() {
+        PGS_MANAGER.setBlacklistEnabled(!PGS_MANAGER.isBlacklistEnabled());
     }
 }

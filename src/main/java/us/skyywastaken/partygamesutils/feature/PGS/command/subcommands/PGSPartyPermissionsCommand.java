@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.pgs.subcommands;
+package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.event.ClickEvent;
@@ -9,8 +9,8 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.command.pgs.PGSManager;
-import us.skyywastaken.partygamesutils.command.pgs.PartyCommands.PGSPartyCommandType;
+import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.Arrays;
@@ -103,6 +103,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     }
 
     private ChatComponentText getPartyCommandChatComponent(String permissionName) {
+        //TODO: delet this
         HoverEvent.Action showTextAction = HoverEvent.Action.SHOW_TEXT;
         String hoverEventText = EnumChatFormatting.AQUA + "Click me to toggle the \"" + EnumChatFormatting.YELLOW
                 + "%PermissionName%" + EnumChatFormatting.AQUA + "\" permission";
