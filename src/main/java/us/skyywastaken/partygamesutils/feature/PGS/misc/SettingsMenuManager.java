@@ -119,8 +119,8 @@ public class SettingsMenuManager {
         IChatComponent returnComponent = new ChatComponentText("");
         String listHelpText = EnumChatFormatting.GREEN + "Seek list: ";
         String listHelpCommand = "/pgs help list";
-        String listTooltip = "Click me to view information about listing sought games!";
-        returnComponent.appendSibling(ChatUtils.getCommandChatComponent(listHelpText, listHelpCommand, listTooltip));
+        String listHelpTooltip = "Click me to view information about listing sought games!";
+        returnComponent.appendSibling(ChatUtils.getCommandChatComponent(listHelpText, listHelpCommand, listHelpTooltip));
 
         int gameStatus = PGS_MANAGER.getSeekListSize();
         String gameString = StringUtils.ACCENT_FORMATTING + gameStatus + StringUtils.INFORMATION_FORMATTING + " games";
@@ -137,5 +137,16 @@ public class SettingsMenuManager {
                     gameStatusCommand, gameStatusTooltip));
         }
         return returnComponent;
+    }
+
+    private IChatComponent getSettingsLineFive() {
+        IChatComponent returnComponent = new ChatComponentText("");
+        String pCHelpText = EnumChatFormatting.GREEN + "Seek list: ";
+        String pCHelpCommand = "/pgs help list";
+        String pCHelpTooltip = "Click me to view information about listing sought games!";
+        returnComponent.appendSibling(ChatUtils.getCommandChatComponent(pCHelpText, pCHelpCommand, pCHelpTooltip));
+
+        boolean partyCommandStatus = PGS_MANAGER.getPartyCommandsEnabled();
+        String
     }
 }
