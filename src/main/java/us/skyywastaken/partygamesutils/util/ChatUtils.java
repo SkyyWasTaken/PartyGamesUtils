@@ -1,5 +1,7 @@
 package us.skyywastaken.partygamesutils.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
@@ -31,5 +33,10 @@ public class ChatUtils {
         ChatComponentText returnChatComponent = new ChatComponentText(baseText);
         returnChatComponent.setChatStyle(hoverStyle);
         return returnChatComponent;
+    }
+
+    public static void addDeletableChatMessage(IChatComponent passedChatComponent, int messageID) {
+        GuiNewChat chatGUI = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+        chatGUI.printChatMessageWithOptionalDeletion(passedChatComponent, messageID);
     }
 }

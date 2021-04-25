@@ -3,6 +3,8 @@ package us.skyywastaken.partygamesutils.feature.PGS.command;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import us.skyywastaken.partygamesutils.command.MasterCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSAddCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSClearCommand;
@@ -19,6 +21,7 @@ import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggle
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSTogglePCCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +53,9 @@ public class PGSCommand extends MasterCommand implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length >= 1 && subCommandExists(args[0])) {
+        if(super.userIsRequestingSubCommandHelp(args)) {
+            sender.addChatMessage(getHelpInfo(args));
+        } else if (args.length >= 1 && subCommandExists(args[0])) {
             executeCommand(args[0], sender, args);
         } else {
             executeCommand("help", sender, args);
@@ -91,5 +96,16 @@ public class PGSCommand extends MasterCommand implements ICommand {
         super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(PGS_MANAGER));
         super.registerSubCommand("ToggleBlacklist", new PGSToggleBlacklistCommand(PGS_MANAGER));
         super.registerSubCommand("settings", new PGSSettingsCommand(SETTINGS_MENU_MANAGER));
+    }
+
+    private IChatComponent getHelpInfo(String[] args) {
+        String commandHelpText = "/pgs " + args[1] + " help";
+        int dashCount = (int) Math.ceil(((40 - commandHelpText.length())/(double)2));
+        String dashPadding = StringUtils.ACCENT_FORMATTING
+                + String.format("%-" + dashCount + "s", "").replaceAll(" ", "-");
+        IChatComponent returnComponent = new ChatComponentText(dashPadding
+                + StringUtils.INFORMATION_FORMATTING + commandHelpText + dashPadding + "\n");
+        returnComponent.appendSibling(new ChatComponentText(super.getSubCommandHelpMessage(args)));
+        return returnComponent;
     }
 }

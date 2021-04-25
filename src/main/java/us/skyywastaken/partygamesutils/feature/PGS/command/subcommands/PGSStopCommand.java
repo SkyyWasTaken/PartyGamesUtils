@@ -8,6 +8,7 @@ import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
@@ -27,6 +28,14 @@ public class PGSStopCommand implements SubCommand, PartyCommand {
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
         return null;
+    }
+
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command stops seeking. You can alternatively used /pgs ToggleSeek or "
+                + "/pgs settings, but some prefer having dedicated start and stop commands.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs stop";
     }
 
     @Override

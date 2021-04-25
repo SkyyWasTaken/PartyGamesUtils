@@ -7,6 +7,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class StringUtils {
+    public static final String BODY_FORMATTING = EnumChatFormatting.GREEN + "";
+    public static final String ACCENT_FORMATTING = EnumChatFormatting.AQUA + "";
+    public static final String INFORMATION_FORMATTING = EnumChatFormatting.YELLOW + "";
+    public static final String COMMAND_USAGE_FORMATTING = EnumChatFormatting.GRAY + "";
+
     public static List<String> getPartialMatches(String partialString, Iterable<String> originalStrings) {
         ArrayList<String> matches = new ArrayList<>();
         for (String possibleMatch : originalStrings) {

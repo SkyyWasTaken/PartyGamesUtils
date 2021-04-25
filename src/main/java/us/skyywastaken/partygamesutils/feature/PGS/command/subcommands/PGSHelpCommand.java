@@ -5,6 +5,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,15 @@ public class PGSHelpCommand implements SubCommand {
         return null;
     }
 
-    private String getHelpHeader(int currentPage, int maxPages) {
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command is used view a list of subcommands see some basic info on each, ordered from most-used to least-used.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs help <PageNumber>";
+    }
+
+    private String getHelpHeader(int currentPage) {
+        int maxPages = 3;
         return EnumChatFormatting.AQUA + "-------------" + EnumChatFormatting.YELLOW
                 + "/pgs help (" + currentPage + "/" + maxPages + ")" + EnumChatFormatting.AQUA + "-------------\n";
     }
@@ -52,11 +61,10 @@ public class PGSHelpCommand implements SubCommand {
     private void initializeHelpPages() {
         EnumChatFormatting commandColor = EnumChatFormatting.GREEN;
         EnumChatFormatting descriptionColor = EnumChatFormatting.GRAY;
-        String helpPageOne = getHelpHeader(1, 3)
+        String helpPageOne = getHelpHeader(1)
                 + EnumChatFormatting.RED + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"
                 + EnumChatFormatting.GOLD + "It is possible that this feature is considered a disallowed modification "
                 + "under Hypixel's rules. Use at your own risk!\n"
-                + "a1a2a3a4a5a6a7a8a9b1b2b3b4b5b6b7b8b9c1c2c3c4c5c6c7c8c9d1d2d3d4d5d6d7d8d9e1e2e3e4e5e6e7e8e9f1f2f3f4f5f6f7f8f9"
                 + commandColor + "/pgs help <page>: " + descriptionColor + "Displays this menu\n"
                 + commandColor + "/pgs add <game1>, <game2>, etc.: " + descriptionColor
                 + "Adds games to the seek list\n"
@@ -66,7 +74,7 @@ public class PGSHelpCommand implements SubCommand {
                 + commandColor + "/pgs start: " + descriptionColor + "Starts game seeking";
         this.HELP_PAGES.put("1", helpPageOne);
 
-        String helpPageTwo = getHelpHeader(2, 3)
+        String helpPageTwo = getHelpHeader(2)
                 + commandColor + "/pgs stop: " + descriptionColor + "Stops game seeking\n"
                 + commandColor + "/pgs PartyPermissions: " + descriptionColor
                 + "Lets you toggle party permissions on or off\n"
@@ -78,7 +86,7 @@ public class PGSHelpCommand implements SubCommand {
                 + "Toggles whether or not the seek list is a blacklist";
         this.HELP_PAGES.put("2", helpPageTwo);
 
-        String helpPageThree = getHelpHeader(3, 3)
+        String helpPageThree = getHelpHeader(3)
                 + commandColor + "/pgs clear: " + descriptionColor + "Clears the seek list";
         this.HELP_PAGES.put("3", helpPageThree);
     }

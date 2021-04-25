@@ -8,15 +8,19 @@ import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.misc.ListMenuManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
 public class PGSRemoveCommand implements SubCommand, PartyCommand {
     private final PGSManager PGS_MANAGER;
+    private final ListMenuManager LIST_MENU_MANAGER;
 
     public PGSRemoveCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
+        this.LIST_MENU_MANAGER = new ListMenuManager(this.PGS_MANAGER);
     }
 
     @Override
@@ -27,12 +31,23 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
         }
         String[] gameList = getGameListStringsFromArgs(args);
         removeGames(gameList);
-        sendClientSuccessMessages(commandSender, gameList);
+        if(args.length > 1 && args[1].equals("--displaylist")) {
+            LIST_MENU_MANAGER.displayList();
+        } else {
+            sendClientSuccessMessages(commandSender, gameList);
+        }
     }
 
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
         return null;
+    }
+
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command is used to remove games from the seek list\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs remove <game1>, <game2>, <game3>";
     }
 
     @Override

@@ -61,7 +61,9 @@ public abstract class MasterCommand {
 
     public String getSubCommandHelpMessage(String[] args) {
         if(args.length >= 2 && subCommandExists(args[1])) {
-            return
+            return SUB_COMMAND_HASH_MAP.get(args[1]).getHelpInformation();
+        } else {
+            return "sub command not found";
         }
     }
 }

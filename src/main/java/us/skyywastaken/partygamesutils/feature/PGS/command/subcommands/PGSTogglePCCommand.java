@@ -42,4 +42,13 @@ public class PGSTogglePCCommand implements SubCommand {
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
         return null;
     }
+
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command is used to enable/disable party commands. When party "
+                + "commands are enabled, party members can use some PGS commands. You can view PGS command permissions "
+                + "with /pgs PartyPermissions or /pgs settings.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs TogglePartyCommands";
+    }
 }

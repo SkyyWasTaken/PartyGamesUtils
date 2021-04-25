@@ -1,16 +1,14 @@
 package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
 import net.minecraft.command.ICommandSender;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.HoverEvent;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
+import us.skyywastaken.partygamesutils.util.ChatUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.Arrays;
@@ -19,6 +17,7 @@ import java.util.List;
 
 public class PGSPartyPermissionsCommand implements SubCommand {
     private final PGSManager PGS_MANAGER;
+    private final static int MESSAGE_ID = 3462;
 
     public PGSPartyPermissionsCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
@@ -26,14 +25,15 @@ public class PGSPartyPermissionsCommand implements SubCommand {
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
-        if (args.length < 2) {
-            commandSender.addChatMessage(getPartyPermissionsMessage());
-        } else if (args.length == 2) {
-            PGSPartyCommandType partyCommandType = PGSPartyCommandType.fromString(args[1]);
+        if (args.length == 0) {
+            sendPartyPermissionsMessage();
+        } else if (args.length == 1) {
+            PGSPartyCommandType partyCommandType = PGSPartyCommandType.fromString(args[0]);
             if (partyCommandType == null) {
                 sendInvalidPermissionMessage(commandSender, args[0]);
             } else {
-                attemptToTogglePermission(commandSender, partyCommandType);
+                attemptToTogglePermission(partyCommandType);
+                sendPartyPermissionsMessage();
             }
         }
     }
@@ -47,21 +47,22 @@ public class PGSPartyPermissionsCommand implements SubCommand {
         }
     }
 
-    private void attemptToTogglePermission(ICommandSender commandSender, PGSPartyCommandType partyCommandType) {
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command is used to manage individual party command permissions." +
+                "Click a permission name to toggle it on or off.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs PartyPermissions";
+    }
+
+    private void sendPartyPermissionsMessage() {
+        ChatUtils.addDeletableChatMessage(getPartyPermissionsMessage(), MESSAGE_ID);
+    }
+
+    private void attemptToTogglePermission(PGSPartyCommandType partyCommandType) {
         boolean currentValue = PGS_MANAGER.getPartyPermissionEnabled(partyCommandType);
+        System.out.println(PGS_MANAGER.getPartyPermissionEnabled(partyCommandType));
         PGS_MANAGER.updatePartyPermission(partyCommandType, !currentValue);
-        sendSuccessMessage(commandSender, partyCommandType, currentValue);
-    }
-
-    private void sendSuccessMessage(ICommandSender commandSender, PGSPartyCommandType partyCommandType
-            , boolean oldValue) {
-        String successMessage = getSuccessString(partyCommandType, oldValue);
-        commandSender.addChatMessage(new ChatComponentText(successMessage));
-    }
-
-    private String getSuccessString(PGSPartyCommandType partyCommandType, boolean oldValue) {
-        return EnumChatFormatting.YELLOW + partyCommandType.toString()
-                + EnumChatFormatting.AQUA + " has been " + StringUtils.getEnabledDisabledString(!oldValue);
     }
 
     private void sendInvalidPermissionMessage(ICommandSender commandSender, String invalidPermissionName) {
@@ -102,25 +103,13 @@ public class PGSPartyPermissionsCommand implements SubCommand {
         return Arrays.asList("Add", "Remove", "Clear", "List", "Start", "Stop", "ToggleBlacklist");
     }
 
-    private ChatComponentText getPartyCommandChatComponent(String permissionName) {
-        //TODO: delet this
-        HoverEvent.Action showTextAction = HoverEvent.Action.SHOW_TEXT;
+    private IChatComponent getPartyCommandChatComponent(String permissionName) {
         String hoverEventText = EnumChatFormatting.AQUA + "Click me to toggle the \"" + EnumChatFormatting.YELLOW
-                + "%PermissionName%" + EnumChatFormatting.AQUA + "\" permission";
-        String clickableText = EnumChatFormatting.LIGHT_PURPLE + "%PermissionName%: %PermissionStatus%";
-        HoverEvent styleHoverEvent = new HoverEvent(showTextAction, new ChatComponentText(hoverEventText
-                .replace("%PermissionName%", permissionName)));
-        ClickEvent styleClickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pgs PartyPermissions "
-                + permissionName);
+                + permissionName + EnumChatFormatting.AQUA + "\" permission";
         String permissionStatus = StringUtils.getEnabledDisabledString(PGS_MANAGER
                 .getPartyPermissionEnabled(PGSPartyCommandType.fromString(permissionName)));
-        ChatComponentText returnChatComponent
-                = new ChatComponentText(clickableText.replace("%PermissionName%", permissionName)
-                .replace("%PermissionStatus%", permissionStatus));
-        ChatStyle returnChatStyle
-                = new ChatStyle().setChatHoverEvent(styleHoverEvent).setChatClickEvent(styleClickEvent);
-
-        returnChatComponent.setChatStyle(returnChatStyle);
-        return returnChatComponent;
+        String clickableText = EnumChatFormatting.LIGHT_PURPLE + permissionName + ": " + permissionStatus;
+        String commandText = "/pgs PartyPermissions " + permissionName;
+        return ChatUtils.getCommandChatComponent(clickableText, commandText, hoverEventText);
     }
 }

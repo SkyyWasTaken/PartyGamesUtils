@@ -6,14 +6,18 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
+import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
 public class PGSDoNotSeekThresholdCommand implements SubCommand {
     private final PGSManager PGS_MANAGER;
+    private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
     public PGSDoNotSeekThresholdCommand(PGSManager passedPGSManager) {
         this.PGS_MANAGER = passedPGSManager;
+        this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(PGS_MANAGER);
     }
 
 
@@ -22,16 +26,29 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
         if (args.length == 0) {
             sendHelpMessage(commandSender);
         } else {
+            System.out.println(String.join(" ", args));
             int newValue = attemptToParseInt(commandSender, args[0]);
             PGS_MANAGER.setDoNotSeekThreshold(newValue);
-            String successMessage = getSuccessMessage(newValue);
-            commandSender.addChatMessage(new ChatComponentText(successMessage));
+            if(args.length >= 2 && args[1].equals("--displaysettings")) {
+                SETTINGS_MENU_MANAGER.displaySettingsMenu();
+            } else {
+                String successMessage = getSuccessMessage(newValue);
+                commandSender.addChatMessage(new ChatComponentText(successMessage));
+            }
         }
     }
 
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
         return null;
+    }
+
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command is used to set the seek threshold. "
+                + "The seek threshold can also be set in /pgs settings.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs DoNotSeekThreshold <newValue>";
     }
 
     private int attemptToParseInt(ICommandSender commandSender, String stringToParse) {

@@ -8,6 +8,7 @@ import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,6 +29,14 @@ public class PGSClearCommand implements SubCommand, PartyCommand {
     @Override
     public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos blockPos) {
         return null;
+    }
+
+    @Override
+    public String getHelpInformation() {
+        return StringUtils.BODY_FORMATTING + "This command is used to clear the seek list, "
+                + "just in case you don't want to individually remove each game.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs clear";
     }
 
     @Override

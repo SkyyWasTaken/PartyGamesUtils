@@ -9,6 +9,7 @@ import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.PGSManager;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
+import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
@@ -37,7 +38,10 @@ public class PGSAddCommand implements SubCommand, PartyCommand {
 
     @Override
     public String getHelpInformation() {
-        return "This command allows you to add games to the seek list. To use it, type /pgs add <game1>, <game2>, <game3>";
+        return StringUtils.BODY_FORMATTING + "This command is used to clear the seek list. "
+                + "You can add multiple games by separating names with commas.\n"
+                + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
+                + "/pgs add <game1>, <game2>, <game3>";
     }
 
     @Override
