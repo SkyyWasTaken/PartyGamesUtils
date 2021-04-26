@@ -1,43 +1,45 @@
 package us.skyywastaken.partygamesutils.feature.PGS.settings;
 
-import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SeekSettings {
     private final ArrayList<String> SEEK_LIST;
-    private final HashMap<PGSPartyCommandType, Boolean> partyCommandPermissionsHashMap;
-    private boolean partyCommandsEnabled;
     private boolean seekingEnabled;
     private boolean blacklistEnabled;
+    private transient boolean isDirty;
     private int doNotSeekThreshold;
 
     public SeekSettings() {
         this.SEEK_LIST = new ArrayList<>();
-        this.partyCommandsEnabled = false;
+        this.isDirty = false;
         doNotSeekThreshold = 4;
-        this.partyCommandPermissionsHashMap = new HashMap<>();
         this.seekingEnabled = false;
-        initializePartyCommandPermissions();
     }
 
 
     public void addSoughtGame(String gameToAdd) {
         SEEK_LIST.add(gameToAdd);
+        isDirty = true;
     }
 
     public void removeSoughtGame(String gameToRemove) {
         SEEK_LIST.remove(gameToRemove);
+        isDirty = true;
     }
 
     public void clearSeekList() {
         SEEK_LIST.clear();
+        isDirty = true;
     }
 
     public boolean isGameSought(String gameName) {
-        return SEEK_LIST.contains(gameName);
+        for(String currentString : SEEK_LIST) {
+            if(gameName.equalsIgnoreCase(currentString)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<String> getSeekList() {
@@ -48,38 +50,13 @@ public class SeekSettings {
         return SEEK_LIST.size();
     }
 
-    public boolean getPartyCommandsEnabled() {
-        return partyCommandsEnabled;
-    }
-
-    public void setPartyCommandsEnabled(boolean newValue) {
-        this.partyCommandsEnabled = newValue;
-    }
-
-    private void initializePartyCommandPermissions() {
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.CLEAR, true);
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.ADD, true);
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.REMOVE, true);
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.LIST, true);
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.START, false);
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.STOP, false);
-        partyCommandPermissionsHashMap.put(PGSPartyCommandType.TOGGLEBLACKLIST, true);
-    }
-
-    public void updatePartyPermission(PGSPartyCommandType permissionType, boolean newValue) {
-        partyCommandPermissionsHashMap.put(permissionType, newValue);
-    }
-
-    public boolean getPartyPermissionEnabled(PGSPartyCommandType commandType) {
-        return partyCommandPermissionsHashMap.get(commandType);
-    }
-
     public boolean isSeekingEnabled() {
         return seekingEnabled;
     }
 
     public void setSeekingEnabled(boolean passedBoolean) {
         seekingEnabled = passedBoolean;
+        isDirty = true;
     }
 
     public int getDoNotSeekThreshold() {
@@ -90,6 +67,7 @@ public class SeekSettings {
         if (newMax < 0) {
             doNotSeekThreshold = 0;
         } else doNotSeekThreshold = Math.min(newMax, 8);
+        isDirty = true;
     }
 
     public boolean isBlacklistEnabled() {
@@ -98,5 +76,14 @@ public class SeekSettings {
 
     public void setBlacklistEnabled(boolean newValue) {
         blacklistEnabled = newValue;
+        isDirty = true;
+    }
+
+    public void setDirty(boolean newValue) {
+        isDirty = newValue;
+    }
+
+    public boolean isDirty() {
+        return isDirty;
     }
 }

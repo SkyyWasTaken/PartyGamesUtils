@@ -1,5 +1,6 @@
 package us.skyywastaken.partygamesutils.feature.PGS.command;
 
+import com.sun.istack.internal.NotNull;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -19,6 +20,8 @@ import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSStopCo
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleSeekCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSToggleBlacklistCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.command.subcommands.PGSTogglePCCommand;
+import us.skyywastaken.partygamesutils.feature.PGS.misc.ListMenuManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.PartyCommandSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -27,12 +30,16 @@ import java.util.Collections;
 import java.util.List;
 
 public class PGSCommand extends MasterCommand implements ICommand {
-    private final SeekSettings PGS_MANAGER;
+    private final SeekSettings SEEK_SETTINGS;
+    private final PartyCommandSettings PARTY_COMMAND_SETTINGS;
     private final SettingsMenuManager SETTINGS_MENU_MANAGER;
+    private final ListMenuManager LIST_MENU_MANAGER;
 
-    public PGSCommand(SeekSettings passedSeekSettings) {
-        this.PGS_MANAGER = passedSeekSettings;
-        this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(this.PGS_MANAGER);
+    public PGSCommand(SeekSettings passedSeekSettings, PartyCommandSettings passedPartyCommandSettings) {
+        this.SEEK_SETTINGS = passedSeekSettings;
+        this.PARTY_COMMAND_SETTINGS = passedPartyCommandSettings;
+        this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(this.SEEK_SETTINGS, this.PARTY_COMMAND_SETTINGS);
+        this.LIST_MENU_MANAGER = new ListMenuManager(this.SEEK_SETTINGS);
         registerSubCommands();
     }
 
@@ -78,23 +85,24 @@ public class PGSCommand extends MasterCommand implements ICommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo( ICommand o) {
         return 0;
     }
 
     private void registerSubCommands() {
         super.registerSubCommand("help", new PGSHelpCommand());
-        super.registerSubCommand("PartyPermissions", new PGSPartyPermissionsCommand(PGS_MANAGER));
-        super.registerSubCommand("clear", new PGSClearCommand(PGS_MANAGER));
-        super.registerSubCommand("add", new PGSAddCommand(PGS_MANAGER));
-        super.registerSubCommand("remove", new PGSRemoveCommand(PGS_MANAGER));
-        super.registerSubCommand("list", new PGSListCommand(PGS_MANAGER));
-        super.registerSubCommand("TogglePartyCommands", new PGSTogglePCCommand(PGS_MANAGER));
-        super.registerSubCommand("ToggleSeek", new PGSToggleSeekCommand(PGS_MANAGER));
-        super.registerSubCommand("start", new PGSStartCommand(PGS_MANAGER));
-        super.registerSubCommand("stop", new PGSStopCommand(PGS_MANAGER));
-        super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(PGS_MANAGER));
-        super.registerSubCommand("ToggleBlacklist", new PGSToggleBlacklistCommand(PGS_MANAGER));
+        super.registerSubCommand("PartyPermissions", new PGSPartyPermissionsCommand(PARTY_COMMAND_SETTINGS, SETTINGS_MENU_MANAGER));
+        super.registerSubCommand("clear", new PGSClearCommand(SEEK_SETTINGS));
+        super.registerSubCommand("add", new PGSAddCommand(SEEK_SETTINGS));
+        super.registerSubCommand("remove", new PGSRemoveCommand(SEEK_SETTINGS, LIST_MENU_MANAGER));
+        super.registerSubCommand("list", new PGSListCommand(LIST_MENU_MANAGER));
+        super.registerSubCommand("TogglePartyCommands", new PGSTogglePCCommand(PARTY_COMMAND_SETTINGS
+                , SETTINGS_MENU_MANAGER));
+        super.registerSubCommand("ToggleSeek", new PGSToggleSeekCommand(SEEK_SETTINGS, SETTINGS_MENU_MANAGER));
+        super.registerSubCommand("start", new PGSStartCommand(SEEK_SETTINGS));
+        super.registerSubCommand("stop", new PGSStopCommand(SEEK_SETTINGS));
+        super.registerSubCommand("DoNotSeekThreshold", new PGSDoNotSeekThresholdCommand(SEEK_SETTINGS, SETTINGS_MENU_MANAGER));
+        super.registerSubCommand("ToggleBlacklist", new PGSToggleBlacklistCommand(SEEK_SETTINGS, SETTINGS_MENU_MANAGER));
         super.registerSubCommand("settings", new PGSSettingsCommand(SETTINGS_MENU_MANAGER));
     }
 

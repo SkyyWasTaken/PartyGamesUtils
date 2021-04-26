@@ -14,9 +14,9 @@ public class PGSToggleSeekCommand implements SubCommand{
     private final SeekSettings PGS_MANAGER;
     private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
-    public PGSToggleSeekCommand(SeekSettings passedSeekSettings) {
+    public PGSToggleSeekCommand(SeekSettings passedSeekSettings, SettingsMenuManager passedSettingsMenuManager) {
         this.PGS_MANAGER = passedSeekSettings;
-        this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(this.PGS_MANAGER);
+        this.SETTINGS_MENU_MANAGER = passedSettingsMenuManager;
     }
 
     @Override

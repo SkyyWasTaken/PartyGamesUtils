@@ -20,6 +20,14 @@ public class StringUtils {
                 .collect(Collectors.toList());
     }
 
+    public static String getEnabledDisabledFormatting (boolean isEnabled) {
+        if(isEnabled) {
+            return EnumChatFormatting.AQUA + "";
+        } else {
+            return EnumChatFormatting.DARK_RED + "";
+        }
+    }
+
     public static String getEnabledDisabledString(boolean isEnabled) {
         if (isEnabled) {
             return EnumChatFormatting.AQUA + "Enabled";

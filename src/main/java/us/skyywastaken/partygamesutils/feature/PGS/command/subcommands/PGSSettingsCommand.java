@@ -27,7 +27,7 @@ public class PGSSettingsCommand implements SubCommand {
     @Override
     public String getHelpInformation() {
         return StringUtils.BODY_FORMATTING + "This command is used to manage PGS-related settings. "
-                + "To change a setting, just click on it!\n"
+                + "You can\n"
                 + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
                 + "/pgs settings";
     }

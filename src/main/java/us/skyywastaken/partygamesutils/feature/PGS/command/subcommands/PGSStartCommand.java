@@ -1,19 +1,16 @@
 package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
-import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
-import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
-public class PGSStartCommand implements SubCommand, PartyCommand {
+public class PGSStartCommand implements SubCommand {
     private final SeekSettings PGS_MANAGER;
 
     public PGSStartCommand(SeekSettings passedSeekSettings) {
@@ -23,7 +20,7 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         enableSeeking();
-        sendSuccessMessage(false, commandSender);
+        sendSuccessMessage(commandSender);
     }
 
     @Override
@@ -38,30 +35,14 @@ public class PGSStartCommand implements SubCommand, PartyCommand {
                 + "/pgs start";
     }
 
-    @Override
-    public void onPartyCommand(String[] args) {
-        System.out.println("got the command");
-        enableSeeking();
-        sendSuccessMessage(true, null);
+
+    private void sendSuccessMessage(ICommandSender commandSender) {
+        String successMessage = getSuccessMessage();
+        commandSender.addChatMessage(new ChatComponentText(successMessage));
     }
 
-    private void sendSuccessMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
-        String successMessage = getSuccessMessage(isPartyCommand);
-        if (isPartyCommand) {
-            HypixelUtils.sendPartyChatMessage(successMessage);
-        } else {
-            if (commandSender != null) {
-                commandSender.addChatMessage(new ChatComponentText(successMessage));
-            }
-        }
-    }
-
-    private String getSuccessMessage(boolean isPartyCommand) {
-        if (isPartyCommand) {
-            return "Seeking has been enabled!";
-        } else {
-            return StringUtils.BODY_FORMATTING + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
-        }
+    private String getSuccessMessage() {
+        return StringUtils.BODY_FORMATTING + "Seeking has been " + EnumChatFormatting.AQUA + "ENABLED!";
     }
 
     private void enableSeeking() {

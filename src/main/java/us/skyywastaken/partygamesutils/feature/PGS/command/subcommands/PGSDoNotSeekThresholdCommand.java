@@ -12,12 +12,12 @@ import us.skyywastaken.partygamesutils.util.StringUtils;
 import java.util.List;
 
 public class PGSDoNotSeekThresholdCommand implements SubCommand {
-    private final SeekSettings PGS_MANAGER;
+    private final SeekSettings SEEK_SETTINGS;
     private final SettingsMenuManager SETTINGS_MENU_MANAGER;
 
-    public PGSDoNotSeekThresholdCommand(SeekSettings passedSeekSettings) {
-        this.PGS_MANAGER = passedSeekSettings;
-        this.SETTINGS_MENU_MANAGER = new SettingsMenuManager(PGS_MANAGER);
+    public PGSDoNotSeekThresholdCommand(SeekSettings passedSeekSettings, SettingsMenuManager passedSettingsMenuManager) {
+        this.SEEK_SETTINGS = passedSeekSettings;
+        this.SETTINGS_MENU_MANAGER = passedSettingsMenuManager;
     }
 
 
@@ -28,7 +28,7 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
         } else {
             System.out.println(String.join(" ", args));
             int newValue = attemptToParseInt(commandSender, args[0]);
-            PGS_MANAGER.setDoNotSeekThreshold(newValue);
+            SEEK_SETTINGS.setDoNotSeekThreshold(newValue);
             if(args.length >= 2 && args[1].equals("--displaysettings")) {
                 SETTINGS_MENU_MANAGER.displaySettingsMenu();
             } else {
@@ -94,6 +94,6 @@ public class PGSDoNotSeekThresholdCommand implements SubCommand {
                 + EnumChatFormatting.GRAY + "Examples: 0 = always fine to pull me out, 4 = don't pull me out on game 4 and over, " +
                 "5 = don't pull me out on game 5 and over, etc.\n"
                 + StringUtils.BODY_FORMATTING + "Current no-seek threshold: " + EnumChatFormatting.YELLOW + "Game "
-                + PGS_MANAGER.getDoNotSeekThreshold();
+                + SEEK_SETTINGS.getDoNotSeekThreshold();
     }
 }

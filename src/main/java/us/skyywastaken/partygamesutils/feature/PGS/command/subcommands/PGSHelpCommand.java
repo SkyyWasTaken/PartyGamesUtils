@@ -59,7 +59,7 @@ public class PGSHelpCommand implements SubCommand {
     }
 
     private void initializeHelpPages() {
-        EnumChatFormatting commandColor = StringUtils.BODY_FORMATTING;
+        String commandColor = StringUtils.BODY_FORMATTING;
         EnumChatFormatting descriptionColor = EnumChatFormatting.GRAY;
         String helpPageOne = getHelpHeader(1)
                 + StringUtils.WARNING_FORMATTING + "WARNING: USING PGS MAY RESULT IN A PUNISHMENT\n"

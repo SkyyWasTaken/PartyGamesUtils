@@ -1,32 +1,30 @@
 package us.skyywastaken.partygamesutils;
 
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import us.skyywastaken.partygamesutils.feature.PGS.command.PGSCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
-import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandManager;
-import us.skyywastaken.partygamesutils.feature.PGS.SeekManager;
+import net.minecraftforge.fml.common.event.FMLModDisabledEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import us.skyywastaken.partygamesutils.feature.PGS.PGS;
 
-@Mod(modid = "partygamesutils", name = "Party Games Utils", version = "0.0.1")
+import java.io.File;
+
+@Mod(modid = "partygamesutils", name = "PGS", version = "ALPHA-1.1.0")
 public class PartyGamesUtils {
-    private final SeekManager SEEK_MANAGER;
-    private final PGSCommand SEEK_COMMAND;
-    private final PGSPartyCommandManager PGS_PARTY_COMMAND_MANAGER;
+    public static File configFile;
+    public static final String MOD_ID = "partygamesutils";
+    private PGS PARTY_GAMES_SEEK;
+    public static final Logger logger = LogManager.getLogger(MOD_ID);
 
-    public PartyGamesUtils() {
-        SeekSettings PGS_MANAGER = new SeekSettings();
-        this.PGS_PARTY_COMMAND_MANAGER = new PGSPartyCommandManager(PGS_MANAGER);
-        SEEK_MANAGER = new SeekManager(PGS_MANAGER);
-        this.SEEK_COMMAND = new PGSCommand(PGS_MANAGER);
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        configFile = new File(event.getModConfigurationDirectory().getAbsolutePath() + "\\PartyGamesUtils");
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        ClientCommandHandler clientCommandHandler = ClientCommandHandler.instance;
-        clientCommandHandler.registerCommand(SEEK_COMMAND);
-        MinecraftForge.EVENT_BUS.register(SEEK_MANAGER);
-        MinecraftForge.EVENT_BUS.register(PGS_PARTY_COMMAND_MANAGER);
+        this.PARTY_GAMES_SEEK = new PGS();
+        PARTY_GAMES_SEEK.init();
     }
 }

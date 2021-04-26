@@ -1,32 +1,29 @@
 package us.skyywastaken.partygamesutils.feature.PGS.command.subcommands;
 
-import jline.internal.Nullable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import us.skyywastaken.partygamesutils.command.PartyCommand;
 import us.skyywastaken.partygamesutils.command.SubCommand;
 import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.misc.ListMenuManager;
-import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
 
 import java.util.List;
 
-public class PGSRemoveCommand implements SubCommand, PartyCommand {
-    private final SeekSettings PGS_MANAGER;
+public class PGSRemoveCommand implements SubCommand {
+    private final SeekSettings SEEK_SETTINGS;
     private final ListMenuManager LIST_MENU_MANAGER;
 
-    public PGSRemoveCommand(SeekSettings passedSeekSettings) {
-        this.PGS_MANAGER = passedSeekSettings;
-        this.LIST_MENU_MANAGER = new ListMenuManager(this.PGS_MANAGER);
+    public PGSRemoveCommand(SeekSettings passedSeekSettings, ListMenuManager passedListMenuManager) {
+        this.SEEK_SETTINGS = passedSeekSettings;
+        this.LIST_MENU_MANAGER = passedListMenuManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         if (args.length == 0) {
-            sendTooFewArgsFailureMessage(false, commandSender);
+            sendTooFewArgsFailureMessage(commandSender);
             return;
         }
         String[] gameList = getGameListStringsFromArgs(args);
@@ -45,25 +42,15 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
 
     @Override
     public String getHelpInformation() {
-        return StringUtils.BODY_FORMATTING + "This command is used to remove games from the seek list\n"
+        return StringUtils.ACCENT_FORMATTING + "/pgs remove " + StringUtils.BODY_FORMATTING + "is used to remove games "
+                + "from the seek list. You can remove multiple games at a time by separating game names with commas.\n"
                 + StringUtils.INFORMATION_FORMATTING + "Usage: " + StringUtils.COMMAND_USAGE_FORMATTING
                 + "/pgs remove <game1>, <game2>, <game3>";
     }
 
-    @Override
-    public void onPartyCommand(String[] args) {
-        if (args.length == 0) {
-            sendTooFewArgsFailureMessage(true, null);
-            return;
-        }
-        String[] gameList = getGameListStringsFromArgs(args);
-        getGameListStringsFromArgs(args);
-        sendPartySuccessMessage(gameList.length);
-    }
-
 
     private void removeGame(String gameToAdd) {
-        PGS_MANAGER.removeSoughtGame(gameToAdd);
+        SEEK_SETTINGS.removeSoughtGame(gameToAdd);
     }
 
     private void removeGames(String[] passedGameStrings) {
@@ -74,27 +61,13 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
     }
 
     private String[] getGameListStringsFromArgs(String[] rawArgsArray) {
-        String rawArgsString = String.join(" ", rawArgsArray);
+        String rawArgsString = String.join(" ", rawArgsArray).replace("--displaylist", "").trim();
         return rawArgsString.split(",");
     }
 
-    private void sendTooFewArgsFailureMessage(boolean isPartyCommand, @Nullable ICommandSender commandSender) {
-        if (isPartyCommand) {
-            HypixelUtils.sendPartyChatMessage(getTooFewArgsFailureMessage(true));
-        } else {
-            if (commandSender != null) {
-                String failureMessage = getTooFewArgsFailureMessage(false);
-                commandSender.addChatMessage(new ChatComponentText(failureMessage));
-            }
-        }
-    }
-
-    private void sendPartySuccessMessage(int gamesAdded) {
-        if (gamesAdded == 1) {
-            HypixelUtils.sendPartyChatMessage("Game removed successfully!");
-        } else {
-            HypixelUtils.sendPartyChatMessage("Game(s) removed successfully!");
-        }
+    private void sendTooFewArgsFailureMessage(ICommandSender commandSender) {
+            String failureMessage = getTooFewArgsFailureMessage();
+            commandSender.addChatMessage(new ChatComponentText(failureMessage));
     }
 
     private void sendClientSuccessMessages(ICommandSender commandSender, String[] addedGames) {
@@ -113,13 +86,9 @@ public class PGSRemoveCommand implements SubCommand, PartyCommand {
                 + StringUtils.BODY_FORMATTING + " from the seek list!";
     }
 
-    private String getTooFewArgsFailureMessage(boolean isPartyCommand) {
-        if (isPartyCommand) {
-            return "You need to specify what game(s) you want to remove!";
-        } else {
-            return StringUtils.WARNING_FORMATTING
-                    + "You need to specify what game(s) you want to remove:\n"
-                    + EnumChatFormatting.WHITE + "ex. /pgs remove Lawn Moower, RPG-16, Lab Escape";
-        }
+    private String getTooFewArgsFailureMessage() {
+        return StringUtils.WARNING_FORMATTING
+                + "You need to specify what game(s) you want to remove:\n"
+                + EnumChatFormatting.WHITE + "ex. /pgs remove Lawn Moower, RPG-16, Lab Escape";
     }
 }

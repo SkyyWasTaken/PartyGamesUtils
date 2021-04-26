@@ -6,7 +6,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import us.skyywastaken.partygamesutils.command.SubCommand;
-import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
+import us.skyywastaken.partygamesutils.feature.PGS.misc.SettingsMenuManager;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.PartyCommandSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.command.partycommands.PGSPartyCommandType;
 import us.skyywastaken.partygamesutils.util.ChatUtils;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -16,24 +17,30 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PGSPartyPermissionsCommand implements SubCommand {
-    private final SeekSettings PGS_MANAGER;
+    private final PartyCommandSettings PARTY_COMMAND_SETTINGS;
+    private final SettingsMenuManager SETTINGS_MENU_MANAGER;
     private final static int MESSAGE_ID = 3462;
 
-    public PGSPartyPermissionsCommand(SeekSettings passedSeekSettings) {
-        this.PGS_MANAGER = passedSeekSettings;
+    public PGSPartyPermissionsCommand(PartyCommandSettings passedPartyCommandSettings, SettingsMenuManager passedSettingsMenuManager) {
+        this.PARTY_COMMAND_SETTINGS = passedPartyCommandSettings;
+        this.SETTINGS_MENU_MANAGER = passedSettingsMenuManager;
     }
 
     @Override
     public void onCommand(ICommandSender commandSender, String[] args) {
         if (args.length == 0) {
             sendPartyPermissionsMessage();
-        } else if (args.length == 1) {
+        } else {
             PGSPartyCommandType partyCommandType = PGSPartyCommandType.fromString(args[0]);
             if (partyCommandType == null) {
                 sendInvalidPermissionMessage(commandSender, args[0]);
             } else {
                 attemptToTogglePermission(partyCommandType);
-                sendPartyPermissionsMessage();
+                if(args.length > 1 && args[1].equals("--displaysettings")) {
+                    SETTINGS_MENU_MANAGER.displaySettingsMenu();
+                } else {
+                    sendPartyPermissionsMessage();
+                }
             }
         }
     }
@@ -60,9 +67,9 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     }
 
     private void attemptToTogglePermission(PGSPartyCommandType partyCommandType) {
-        boolean currentValue = PGS_MANAGER.getPartyPermissionEnabled(partyCommandType);
-        System.out.println(PGS_MANAGER.getPartyPermissionEnabled(partyCommandType));
-        PGS_MANAGER.updatePartyPermission(partyCommandType, !currentValue);
+        boolean currentValue = PARTY_COMMAND_SETTINGS.getPartyPermissionEnabled(partyCommandType);
+        System.out.println(PARTY_COMMAND_SETTINGS.getPartyPermissionEnabled(partyCommandType));
+        PARTY_COMMAND_SETTINGS.updatePartyPermission(partyCommandType, !currentValue);
     }
 
     private void sendInvalidPermissionMessage(ICommandSender commandSender, String invalidPermissionName) {
@@ -106,7 +113,7 @@ public class PGSPartyPermissionsCommand implements SubCommand {
     private IChatComponent getPartyCommandChatComponent(String permissionName) {
         String hoverEventText = EnumChatFormatting.AQUA + "Click me to toggle the \"" + EnumChatFormatting.YELLOW
                 + permissionName + EnumChatFormatting.AQUA + "\" permission";
-        String permissionStatus = StringUtils.getEnabledDisabledString(PGS_MANAGER
+        String permissionStatus = StringUtils.getEnabledDisabledString(PARTY_COMMAND_SETTINGS
                 .getPartyPermissionEnabled(PGSPartyCommandType.fromString(permissionName)));
         String clickableText = EnumChatFormatting.LIGHT_PURPLE + permissionName + ": " + permissionStatus;
         String commandText = "/pgs PartyPermissions " + permissionName;

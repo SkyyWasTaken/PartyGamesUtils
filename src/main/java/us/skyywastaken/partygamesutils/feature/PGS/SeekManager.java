@@ -6,6 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import us.skyywastaken.partygamesutils.feature.PGS.settings.PartyCommandSettings;
 import us.skyywastaken.partygamesutils.feature.PGS.settings.SeekSettings;
 import us.skyywastaken.partygamesutils.util.HypixelUtils;
 import us.skyywastaken.partygamesutils.util.ScoreboardUtils;
@@ -13,10 +14,12 @@ import us.skyywastaken.partygamesutils.util.StringUtils;
 
 public class SeekManager {
     private final SeekSettings PGS_MANAGER;
+    private final PartyCommandSettings PARTY_COMMAND_SETTINGS;
     private boolean playerWasNotified;
 
-    public SeekManager(SeekSettings seekSettings) {
+    public SeekManager(SeekSettings seekSettings, PartyCommandSettings passedPartyCommandSettings) {
         this.PGS_MANAGER = seekSettings;
+        this.PARTY_COMMAND_SETTINGS = passedPartyCommandSettings;
         this.playerWasNotified = false;
     }
 
@@ -46,7 +49,7 @@ public class SeekManager {
 
     private void notifyPlayer() {
         EntityPlayerSP clientPlayer = Minecraft.getMinecraft().thePlayer;
-        if (PGS_MANAGER.getPartyCommandsEnabled()) {
+        if (PARTY_COMMAND_SETTINGS.getPartyCommandsEnabled()) {
             HypixelUtils.sendPartyChatMessage("I've found a game you're looking for!");
         } else {
             clientPlayer.addChatMessage(new ChatComponentText(StringUtils.BODY_FORMATTING + "A good game has been found!"));
