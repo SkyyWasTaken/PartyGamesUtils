@@ -2,9 +2,9 @@ package us.skyywastaken.partygamesutils.util;
 
 import net.minecraft.util.EnumChatFormatting;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class StringUtils {
     public static final String BODY_FORMATTING = EnumChatFormatting.GREEN + "";
@@ -20,8 +20,8 @@ public class StringUtils {
                 .collect(Collectors.toList());
     }
 
-    public static String getEnabledDisabledFormatting (boolean isEnabled) {
-        if(isEnabled) {
+    public static String getEnabledDisabledFormatting(boolean isEnabled) {
+        if (isEnabled) {
             return EnumChatFormatting.AQUA + "";
         } else {
             return EnumChatFormatting.DARK_RED + "";

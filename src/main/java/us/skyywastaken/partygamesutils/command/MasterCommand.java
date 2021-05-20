@@ -25,7 +25,7 @@ public abstract class MasterCommand {
         SubCommand subCommandToExecute = SUB_COMMAND_HASH_MAP.get(subCommand);
         if (subCommandToExecute == null) return;
         String[] argsToPass;
-        if(passedArgs.length > 1) {
+        if (passedArgs.length > 1) {
             argsToPass = Arrays.copyOfRange(passedArgs, 1, passedArgs.length);
         } else {
             argsToPass = new String[0];
@@ -60,7 +60,7 @@ public abstract class MasterCommand {
     }
 
     public String getSubCommandHelpMessage(String[] args) {
-        if(args.length >= 2 && subCommandExists(args[1])) {
+        if (args.length >= 2 && subCommandExists(args[1])) {
             return SUB_COMMAND_HASH_MAP.get(args[1]).getHelpInformation();
         } else {
             return "sub command not found";

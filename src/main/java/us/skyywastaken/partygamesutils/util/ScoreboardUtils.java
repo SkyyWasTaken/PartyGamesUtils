@@ -1,13 +1,17 @@
 package us.skyywastaken.partygamesutils.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
+
+import java.util.Collection;
+import java.util.List;
 
 public class ScoreboardUtils {
     public static String getLineFromScoreboard(int lineNumber) {
         Scoreboard scoreboard = getScoreboard();
-        if(scoreboard == null) {
+        if (scoreboard == null) {
             return "";
         }
         ScorePlayerTeam requestedTeam;
@@ -28,7 +32,7 @@ public class ScoreboardUtils {
         ScorePlayerTeam requestedTeam;
         try {
             requestedTeam = getScoreboard().getTeam("team_12");
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return "";
         }
         if (requestedTeam == null) return "";
@@ -59,5 +63,17 @@ public class ScoreboardUtils {
         } else {
             return Minecraft.getMinecraft().theWorld.getScoreboard();
         }
+    }
+
+    public static String getScoreboardTitle() {
+        Scoreboard scoreboard = getScoreboard();
+        if(scoreboard == null) {
+            return "";
+        }
+        ScoreObjective scoreObjective = scoreboard.getObjectiveInDisplaySlot(1);
+        if(scoreObjective == null) {
+            return "";
+        }
+        return scoreboard.getObjectiveInDisplaySlot(1).getName();
     }
 }
