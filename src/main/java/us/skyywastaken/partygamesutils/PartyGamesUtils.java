@@ -8,13 +8,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import us.skyywastaken.partygamesutils.command.PGU.PGUCommand;
-import us.skyywastaken.partygamesutils.feature.pgs.PGS;
+import us.skyywastaken.partygamesutils.feature.gameseeking.PGS;
 import us.skyywastaken.partygamesutils.feature.startracker.StarTracker;
-import us.skyywastaken.partygamesutils.feature.startracker.handlers.MessageHandler;
+import us.skyywastaken.partygamesutils.util.minigame.MiniGameInfoUpdater;
+import us.skyywastaken.partygamesutils.util.minigame.MiniGameManager;
 
 import java.io.File;
 
-@Mod(modid = "partygamesutils", name = "PGS", version = "ALPHA-1.1.0")
+@Mod(modid = "partygamesutils", name = "PGU", version = "ALPHA-1.1.0")
 public class PartyGamesUtils {
     public static final String MOD_ID = "partygamesutils";
     public static final Logger logger = LogManager.getLogger(MOD_ID);
@@ -31,8 +32,11 @@ public class PartyGamesUtils {
         PARTY_GAMES_SEEK.init();
 
         StarTracker starTracker = new StarTracker();
-        MessageHandler messageHandler = new MessageHandler(starTracker);
+        starTracker.init();
+
+        MiniGameInfoUpdater miniGameInfoUpdater = new MiniGameInfoUpdater();
+        MinecraftForge.EVENT_BUS.register(miniGameInfoUpdater);
+
         ClientCommandHandler.instance.registerCommand(new PGUCommand(starTracker));
-        MinecraftForge.EVENT_BUS.register(messageHandler);
     }
 }

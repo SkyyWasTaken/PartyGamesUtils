@@ -1,4 +1,4 @@
-package us.skyywastaken.partygamesutils.command.PGU;
+package us.skyywastaken.partygamesutils.feature.tiecalculator.command;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -6,7 +6,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import us.skyywastaken.partygamesutils.command.MasterCommand;
-import us.skyywastaken.partygamesutils.command.PGU.subcommands.PGUDisplayGameInfoCommand;
 import us.skyywastaken.partygamesutils.command.PGU.subcommands.PGUDisplayStarsCommand;
 import us.skyywastaken.partygamesutils.feature.startracker.StarTracker;
 import us.skyywastaken.partygamesutils.util.StringUtils;
@@ -14,10 +13,8 @@ import us.skyywastaken.partygamesutils.util.StringUtils;
 import java.util.Collections;
 import java.util.List;
 
-public class PGUCommand extends MasterCommand implements ICommand {
-    private final StarTracker STAR_TRACKER;
-    public PGUCommand(StarTracker passedStarTracker) {
-        this.STAR_TRACKER = passedStarTracker;
+public class PGTCommand extends MasterCommand implements ICommand {
+    public PGTCommand(StarTracker passedStarTracker) {
         registerSubCommands();
     }
 
@@ -68,8 +65,7 @@ public class PGUCommand extends MasterCommand implements ICommand {
     }
 
     private void registerSubCommands() {
-        super.registerSubCommand("displaystars", new PGUDisplayStarsCommand(this.STAR_TRACKER));
-        super.registerSubCommand("displaygameinfo", new PGUDisplayGameInfoCommand());
+
     }
 
     private IChatComponent getHelpInfo(String[] args) {

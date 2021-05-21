@@ -1,10 +1,18 @@
 package us.skyywastaken.partygamesutils.feature.startracker;
 
+import net.minecraftforge.common.MinecraftForge;
+import us.skyywastaken.partygamesutils.feature.startracker.handlers.StarTrackingMessageHandler;
+
 import java.util.HashMap;
 
 public class StarTracker {
     private final HashMap<String, Integer> PLAYER_SCORE_HASHMAP = new HashMap<>();
     public StarTracker() {
+    }
+
+    public void init() {
+        StarTrackingMessageHandler messageHandler = new StarTrackingMessageHandler(this);
+        MinecraftForge.EVENT_BUS.register(messageHandler);
     }
 
     public void addScoreToPlayer(String playerName, int scoreToAdd) {
@@ -16,7 +24,11 @@ public class StarTracker {
     }
 
     public void clearScores() {
-        this.PLAYER_SCORE_HASHMAP.clear();
+        if(PLAYER_SCORE_HASHMAP.isEmpty()) {
+            return;
+        } else {
+            this.PLAYER_SCORE_HASHMAP.clear();
+        }
     }
 
     public HashMap<String, Integer> getPlayerScoreHashMap() {

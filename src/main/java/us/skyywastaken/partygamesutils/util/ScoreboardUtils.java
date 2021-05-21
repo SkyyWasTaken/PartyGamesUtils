@@ -4,12 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.StringUtils;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashMap;
 
 public class ScoreboardUtils {
-    public static String getLineFromScoreboard(int lineNumber) {
+    public static String getUnformattedLineFromScoreboard(int lineNumber) {
         Scoreboard scoreboard = getScoreboard();
         if (scoreboard == null) {
             return "";
@@ -20,41 +20,16 @@ public class ScoreboardUtils {
         } catch (NullPointerException e) {
             return "";
         }
-        if (requestedTeam == null) return "garbage string";
-        String colorPrefix = requestedTeam.getColorPrefix();
-        String colorSuffix = requestedTeam.getColorSuffix();
-        return colorPrefix + colorSuffix;
-    }
-
-    public static String getNoPrefixGameName() {
-        Scoreboard scoreboard = getScoreboard();
-        if (scoreboard == null) return "";
-        ScorePlayerTeam requestedTeam;
-        try {
-            requestedTeam = getScoreboard().getTeam("team_12");
-        } catch (NullPointerException e) {
+        if (requestedTeam == null) {
             return "";
         }
-        if (requestedTeam == null) return "";
-        String basePrefixString = requestedTeam.getColorPrefix();
-        String prefixString;
-        if (basePrefixString.length() > 2) {
-            prefixString = basePrefixString.substring(2);
-        } else {
-            prefixString = basePrefixString;
-        }
-        String baseSuffixString = requestedTeam.getColorSuffix();
-        String suffixString;
-        if (baseSuffixString.length() > 2) {
-            suffixString = baseSuffixString.substring(2);
-        } else {
-            suffixString = baseSuffixString;
-        }
-        return prefixString + suffixString;
+        String colorPrefix = requestedTeam.getColorPrefix();
+        String colorSuffix = requestedTeam.getColorSuffix();
+        return StringUtils.stripControlCodes(colorPrefix + colorSuffix);
     }
 
     public static String getGameNumberRow() {
-        return getLineFromScoreboard(4);
+        return getUnformattedLineFromScoreboard(4);
     }
 
     private static Scoreboard getScoreboard() {
@@ -75,5 +50,20 @@ public class ScoreboardUtils {
             return "";
         }
         return scoreboard.getObjectiveInDisplaySlot(1).getName();
+    }
+
+    public static LinkedHashMap<String, Integer> getScoreRows() {
+        LinkedHashMap<String, Integer> returnHashMap = new LinkedHashMap<>();
+        for(int i = 10; i > 7; i--) {
+            String currentLine = getUnformattedLineFromScoreboard(i);
+            if(currentLine.length() == 0) {
+                continue;
+            }
+            char possibleStarCharacter = currentLine.charAt(currentLine.length()-1);
+            if(!Character.isDigit(possibleStarCharacter)) {
+                System.out.println((int)(possibleStarCharacter));
+            }
+        }
+        return returnHashMap;
     }
 }
